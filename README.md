@@ -41,7 +41,7 @@ can be checked on another.  The easiest way to save it is to put it on the
 
 ### Step 2: Verify
 
-Before doing running any other code (especially things that could affect data), 
+Before running any other code (especially things that could affect data), 
 you should check to make sure that there's a valid CSRF token in place if it's 
 needed.  That step is also very straightforward:
 
