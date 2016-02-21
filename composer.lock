@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4e92992b07d7c62b1998f0059a4ba0fe",
-    "content-hash": "c05010d9e878bde0150e26595b4458db",
+    "hash": "c90980082aa8714e36ac5e2563fc075a",
+    "content-hash": "45afc059a8281a7d3b76e9cf9ae8a98b",
     "packages": [
         {
             "name": "ircmaxell/random-lib",
@@ -1297,7 +1297,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.0.0"
+        "php": "^7"
     },
     "platform-dev": {
         "ext-xdebug": "*"
