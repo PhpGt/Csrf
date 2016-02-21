@@ -1,0 +1,5 @@
+/.idea
+/*.sublime-*
+composer.phar
+/vendor
+/test/_Report
