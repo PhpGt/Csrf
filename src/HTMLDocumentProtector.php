@@ -2,7 +2,7 @@
 namespace phpgt\csrf;
 
 
-class HTMLDocument {
+class HTMLDocumentProtector {
 	public static $TOKEN_NAME = "csrf-token";
 	private       $doc;
 	private       $tokenStore;

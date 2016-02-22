@@ -1,7 +1,7 @@
 <?php
 namespace phpgt\csrf;
 
-class HTMLDocumentTest extends \PHPUnit_Framework_TestCase {
+class HTMLDocumentProtectorTest extends \PHPUnit_Framework_TestCase {
 	const NO_FORMS
 		= <<<HTML
 <!doctype html>
@@ -60,7 +60,7 @@ HTML;
 HTML;
 
 	public function testConstructFromString() {
-		$sut = new HTMLDocument(self::NO_FORMS, new ArrayTokenStore());
+		$sut = new HTMLDocumentProtector(self::NO_FORMS, new ArrayTokenStore());
 		$doc = $sut->getHTMLDocument();
 		$this->assertInstanceOf("\\phpgt\\dom\\HTMLDocument", $doc);
 		$this->assertEquals(
@@ -69,7 +69,7 @@ HTML;
 
 	public function testConstructFromDomDocument() {
 		$domDoc = new \phpgt\dom\HTMLDocument(self::ONE_FORM);
-		$sut = new HTMLDocument($domDoc, new ArrayTokenStore());
+		$sut = new HTMLDocumentProtector($domDoc, new ArrayTokenStore());
 		$doc = $sut->getHTMLDocument();
 		$this->assertSame($domDoc, $doc);
 		$this->assertEquals(
@@ -77,44 +77,44 @@ HTML;
 	}
 
 	public function testZeroForms() {
-		$sut = new HTMLDocument(self::NO_FORMS, new ArrayTokenStore());
+		$sut = new HTMLDocumentProtector(self::NO_FORMS, new ArrayTokenStore());
 		$sut->protectAndInject();
 
 		// check that the token hasn't been injected anywhere
 		$this->assertFalse(
 			strpos(
 				$sut->getHTMLDocument()->saveHTML(),
-				HTMLDocument::$TOKEN_NAME));
+				HTMLDocumentProtector::$TOKEN_NAME));
 		// and that a form hasn't been created or something similar
 		$this->assertNull($sut->getHTMLDocument()->querySelector("form"));
 	}
 
 	public function testSingleForm() {
-		$sut = new HTMLDocument(self::ONE_FORM, new ArrayTokenStore());
+		$sut = new HTMLDocumentProtector(self::ONE_FORM, new ArrayTokenStore());
 		$sut->protectAndInject();
 
 		// check that the token has been injected
 		$doc = $sut->getHTMLDocument();
 		$this->assertTrue(
-			strpos($doc->saveHTML(), HTMLDocument::$TOKEN_NAME) >= 0);
+			strpos($doc->saveHTML(), HTMLDocumentProtector::$TOKEN_NAME) >= 0);
 		$this->assertNotNull(
 			$doc->querySelector(
-				"input[name='" . HTMLDocument::$TOKEN_NAME . "']"));
+				"input[name='" . HTMLDocumentProtector::$TOKEN_NAME . "']"));
 		$this->assertNotEmpty(
 			$doc->querySelector(
-				"input[name='" . HTMLDocument::$TOKEN_NAME . "']")
+				"input[name='" . HTMLDocumentProtector::$TOKEN_NAME . "']")
 			    ->getAttribute("value"));
 	}
 
 	public function testMultipleForms() {
-		$sut = new HTMLDocument(self::THREE_FORMS, new ArrayTokenStore());
+		$sut = new HTMLDocumentProtector(self::THREE_FORMS, new ArrayTokenStore());
 		$sut->protectAndInject();
 
 		// check that the token has been injected in all forms
 		$doc = $sut->getHTMLDocument();
 		$this->assertEquals(
 			3, $doc->querySelectorAll(
-			"input[name='" . HTMLDocument::$TOKEN_NAME . "']")->length);
+			"input[name='" . HTMLDocumentProtector::$TOKEN_NAME . "']")->length);
 	}
 
 	// we don't need separate tokens for each form - that would be both wasteful,
@@ -124,13 +124,13 @@ HTML;
 	// across all of the forms
 	public function testSingleCodeSharedAcrossForms() {
 
-		$sut = new HTMLDocument(self::THREE_FORMS, new ArrayTokenStore());
+		$sut = new HTMLDocumentProtector(self::THREE_FORMS, new ArrayTokenStore());
 		$sut->protectAndInject();
 
 		$doc = $sut->getHTMLDocument();
 		$token = null;
 		foreach($doc->querySelectorAll(
-			"input[name='" . HTMLDocument::$TOKEN_NAME . "']") as $input) {
+			"input[name='" . HTMLDocumentProtector::$TOKEN_NAME . "']") as $input) {
 			if($token === null) {
 				$token = $input->getAttribute("value");
 			} else {

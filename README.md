@@ -70,7 +70,7 @@ request will fail to pass Step 2 when the page gets submitted!
     $htmlIn = "<html>...</html>"
     
     // now do the processing
-    $page = new HTMLDocument($html, $tokenStore);
+    $page = new HTMLDocumentProtector($html, $tokenStore);
     $page->protectAndInject();
     
     // and you can get it back out however you wish.  
