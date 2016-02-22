@@ -1,5 +1,5 @@
 # phpgt csrf
-Automatic protection from Cross-Site Request Forgery for PHP7 projects
+Automatic protection from Cross-Site Request Forgery for PHP 7 projects
 
 ***
 
