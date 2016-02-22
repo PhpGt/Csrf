@@ -25,12 +25,12 @@ abstract class TokenStore {
 	public function processAndVerify() {
 		// expect the token to be present on ALL post requests
 		if(!empty($_POST)) {
-			if(!isset($_POST[ HTMLDocument::$TOKEN_NAME ])) {
+			if(!isset($_POST[ HTMLDocumentProtector::$TOKEN_NAME ])) {
 				throw new CSRFTokenMissingException();
 			}
 
-			$this->verifyToken($_POST[ HTMLDocument::$TOKEN_NAME ]);
-			$this->consumeToken($_POST[ HTMLDocument::$TOKEN_NAME ]);
+			$this->verifyToken($_POST[ HTMLDocumentProtector::$TOKEN_NAME ]);
+			$this->consumeToken($_POST[ HTMLDocumentProtector::$TOKEN_NAME ]);
 		}
 	}
 

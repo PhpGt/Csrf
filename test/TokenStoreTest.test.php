@@ -39,7 +39,7 @@ HTML;
 	// POST request received with token but invalid
 	public function testInvalidToken() {
 		$_POST["doink"] = "binky";
-		$_POST[ HTMLDocument::$TOKEN_NAME ] = "12321";
+		$_POST[ HTMLDocumentProtector::$TOKEN_NAME ] = "12321";
 		$sut = new ArrayTokenStore();
 		$this->expectException(
 			"\\phpgt\\csrf\\exception\\CSRFTokenInvalidException");
@@ -55,7 +55,7 @@ HTML;
 
 		$_POST["doink"] = "binky";
 		// add the token as if it were from a previous page
-		$_POST[ HTMLDocument::$TOKEN_NAME ] = $token;
+		$_POST[ HTMLDocumentProtector::$TOKEN_NAME ] = $token;
 
 		$this->expectException(
 			"\\phpgt\\csrf\\exception\\CSRFTokenSpentException");
@@ -70,7 +70,7 @@ HTML;
 
 		$_POST["doink"] = "binky";
 		// add the token as if it were from a previous page
-		$_POST[ HTMLDocument::$TOKEN_NAME ] = $token;
+		$_POST[ HTMLDocumentProtector::$TOKEN_NAME ] = $token;
 
 		$tokenStore->processAndVerify();
 	}
