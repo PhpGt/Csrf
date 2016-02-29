@@ -13,6 +13,10 @@
     "phpunit/php-code-coverage": "*",
     "ext-xdebug": "*"
   },
+  "minimum-stability": "stable",
+  "scripts": {
+    "test": "./vendor/bin/phpunit -c ./phpunit.xml"
+  },
 
   "license": "MIT",
 

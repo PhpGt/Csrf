@@ -14,6 +14,7 @@ class HTMLDocumentProtectorTest extends \PHPUnit_Framework_TestCase {
 	<h1>This HTML is for the unit test.</h1>
 	<p>There are a few elements in this document.</p>
 </body>
+</html>
 HTML;
 
 	const ONE_FORM
@@ -32,6 +33,7 @@ HTML;
         <button type="submit"></button>
     </form>
 </body>
+</html>
 HTML;
 
 	const THREE_FORMS
@@ -57,6 +59,7 @@ HTML;
     <form method="POST">
     </form>
 </body>
+</html>
 HTML;
 
 	public function testConstructFromString() {
