@@ -4,7 +4,7 @@
   "type": "library",
 
   "require": {
-    "php": "^7",
+    "php": ">=7.0.0",
     "phpgt/dom": "*",
     "ircmaxell/random-lib": "^1.1"
   },
