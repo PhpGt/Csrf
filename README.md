@@ -1,4 +1,6 @@
 # phpgt csrf
+
+[![Join the chat at https://gitter.im/phpgt/csrf](https://badges.gitter.im/phpgt/csrf.svg)](https://gitter.im/phpgt/csrf?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Automatic protection from Cross-Site Request Forgery for PHP 7 projects
 
 ***
