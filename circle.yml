@@ -1,0 +1,11 @@
+machine:
+  php:
+    version: 7.0.0RC7
+
+test:
+  override:
+    - vendor/bin/phpunit
+
+notify:
+  webhooks:
+    -url: https://webhooks.gitter.im/e/23c3a60182f3de2914b7
