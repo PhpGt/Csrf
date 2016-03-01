@@ -3,6 +3,18 @@ Automatic protection from Cross-Site Request Forgery for PHP 7 projects
 
 ***
 
+<a href="https://gitter.im/phpgt/csrf" target="_blank">
+    <img src="https://img.shields.io/gitter/room/phpgt/csrf.svg?style=flat-square" alt="Gitter chat" />
+</a>
+<a href="https://circleci.com/gh/phpgt/csrf" target="_blank">
+    <img src="https://img.shields.io/circleci/project/phpgt/csrf/master.svg?style=flat-square" alt="Build status" />
+</a>
+<a href="https://scrutinizer-ci.com/g/phpgt/csrf" target="_blank">
+    <img src="https://img.shields.io/scrutinizer/g/phpgt/csrf/master.svg?style=flat-square" alt="Code quality" />
+</a>
+<a href="https://scrutinizer-ci.com/g/phpgt/csrf" target="_blank">
+    <img src="https://img.shields.io/scrutinizer/coverage/g/phpgt/csrf/master.svg?style=flat-square" alt="Code coverage" />
+</a>
 
 This library handles [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)) 
 protection automatically for you - including generating tokens, injecting them 
