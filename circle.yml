@@ -8,4 +8,4 @@ test:
 
 notify:
   webhooks:
-    -url: https://webhooks.gitter.im/e/23c3a60182f3de2914b7
+    - url: https://webhooks.gitter.im/e/23c3a60182f3de2914b7
