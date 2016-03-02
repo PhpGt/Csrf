@@ -8,7 +8,7 @@ dependencies:
 
 test:
   override:
-    - vendor/bin/phpunit --no-coverage
+    - vendor/bin/phpunit --no-coverage --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml
 
 notify:
   webhooks:
