@@ -8,7 +8,7 @@ dependencies:
 
 test:
   override:
-    - vendor/bin/phpunit -c ./phpunit.xml
+    - vendor/bin/phpunit -v
 
 notify:
   webhooks:
