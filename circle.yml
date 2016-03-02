@@ -8,7 +8,7 @@ dependencies:
 
 test:
   override:
-    - vendor/bin/phpunit -v
+    - vendor/bin/phpunit --no-coverage
 
 notify:
   webhooks:
