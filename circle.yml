@@ -2,9 +2,13 @@ machine:
   php:
     version: 7.0.0RC7
 
+dependencies:
+  pre:
+    - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+
 test:
   override:
-    - vendor/bin/phpunit
+    - vendor/bin/phpunit --no-coverage --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml
 
 notify:
   webhooks:
