@@ -7,11 +7,16 @@ use SecurityLib\Strength;
 
 
 abstract class TokenStore {
+	public static  $MAX_TOKENS  = 1000;
 	private static $strength    = Strength::MEDIUM;
 	private static $tokenLength = 64;
 	private        $tokenGenerator;
 
-	public function __construct() {
+	public function __construct(int $maxTokens = null) {
+		if($maxTokens !== null) {
+			self::$MAX_TOKENS = $maxTokens;
+		}
+
 		$factory = new Factory();
 		$this->tokenGenerator = $factory->getGenerator(
 			new Strength(self::$strength));

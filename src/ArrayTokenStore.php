@@ -10,12 +10,15 @@ use phpgt\csrf\exception\CSRFTokenSpentException;
 class ArrayTokenStore extends TokenStore {
 	private $store = [ ];
 
-	public function __construct() {
-		parent::__construct();
+	public function __construct(int $maxTokens = null) {
+		parent::__construct($maxTokens);
 	}
 
 	public function saveToken(string $token) {
 		$this->store[ $token ] = null;
+		if(count($this->store) > self::$MAX_TOKENS) {
+			array_shift($this->store);
+		}
 	}
 
 	public function verifyToken(string $token) : bool {
