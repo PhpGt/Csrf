@@ -22,7 +22,7 @@ abstract class TokenStore
      */
     public static $MAX_TOKENS  = 1000;
     private static $strength    = Strength::MEDIUM;
-    private static $tokenLength = 64;
+    private static $tokenLength = 32;
     private $tokenGenerator;
 
     /**
@@ -50,8 +50,18 @@ abstract class TokenStore
     }
 
     /**
-     * Generate a new token.  NOTE: This method does NOT store the token.  To
-     * do so
+     * Specify that tokens of a different length should be generated.  (See
+     * self::$tokenLength for the default token length).
+     *
+     * @param int $newTokenLength The length of tokens to be generated.
+     */
+    public function setTokenLength(int $newTokenLength)
+    {
+        self::$tokenLength = $newTokenLength;
+    }
+
+    /**
+     * Generate a new token.  NOTE: This method does NOT store the token.
      *
      * @see TokenStore::saveToken() for storing a generated token.
      *
@@ -113,7 +123,7 @@ abstract class TokenStore
      * Checks that the token is valid (i.e. exists and has not been consumed
      * already).
      *
-     * @param string $token  The token to be checked.
+     * @param string $token The token to be checked.
      *
      * @throws CSRFTokenInvalidException The token is invalid (i.e. is not
      * contained within the store).

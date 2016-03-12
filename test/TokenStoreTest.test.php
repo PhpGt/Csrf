@@ -96,4 +96,17 @@ HTML;
 
         $this->assertEquals($iterations, count($previousTokens));
     }
+
+    public function testTokenLengthChange()
+    {
+        $sut = new ArrayTokenStore();
+        $sut->setTokenLength(6);
+
+        $token = $sut->generateNewToken();
+        $this->assertEquals(6, strlen($token));
+
+        // now make sure the shorter token is successfully stored
+        $sut->saveToken($token);
+        $this->assertTrue($sut->verifyToken($token));
+    }
 }
