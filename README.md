@@ -89,3 +89,13 @@ $page->protectAndInject();
 $htmlOut = $page->getHTMLDocument()->saveHTML();
 ```
 
+Note that if several of the forms on your page could be submitted without
+reloading the page (which is uncommon, but could happen if you're using 
+AJAX and not reloading the page using on the server response), you will
+want to call `$page->protectAndInject(HTMLDocumentProtector::TOKEN_PER_FORM);`,
+to have a unique token injected into each form.  This uses more server 
+resources, and means there are far more unused tokens that could be 
+guessed, but is unavoidable.  (Remember, if you'll still need to parse
+the new token for that form out of the page response and update the 
+client-side form, otherwise a second submit would fail as the original 
+token will have been spent.)
