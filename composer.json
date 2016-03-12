@@ -12,12 +12,14 @@
     "phpunit/phpunit": "^5.1",
     "phpunit/php-code-coverage": "*",
     "ext-xdebug": "*",
-    "fabpot/php-cs-fixer": "^1.11.2"
+    "fabpot/php-cs-fixer": "^1.11.2",
+    "phpdocumentor/phpdocumentor": "^2.8.5"
   },
   "minimum-stability": "stable",
   "scripts": {
     "test": "./vendor/bin/phpunit -c ./phpunit.xml",
-    "fix": "./vendor/bin/php-cs-fixer fix"
+    "fix": "./vendor/bin/php-cs-fixer fix",
+    "docs": "vendor/bin/phpdoc -d src/ -t docs"
   },
 
   "license": "MIT",
