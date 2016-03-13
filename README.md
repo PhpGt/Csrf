@@ -89,6 +89,17 @@ $page->protectAndInject();
 $htmlOut = $page->getHTMLDocument()->saveHTML();
 ```
 
+#### Using Tokens of a Different Length
+
+By default, 32 character tokens are generated.  They use characters from 
+the set \[a-zA-Z0-9\], meaning a 64-bit token which would take a 
+brute-force attacker making 100,000 requests per second around 
+2.93 million years to guess.  If this seems either excessive or 
+inadequate you can change the token length using 
+`TokenStore::setTokenLength()`.  
+
+#### Special Note About AJAX Clients
+
 Note that if several of the forms on your page could be submitted without
 reloading the page (which is uncommon, but could happen if you're using 
 AJAX and not reloading the page using on the server response), you will
@@ -99,3 +110,4 @@ guessed, but is unavoidable.  (Remember, if you'll still need to parse
 the new token for that form out of the page response and update the 
 client-side form, otherwise a second submit would fail as the original 
 token will have been spent.)
+
