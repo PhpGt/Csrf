@@ -126,15 +126,10 @@ HTML;
             "input[name='" . HTMLDocumentProtector::$TOKEN_NAME . "']")->length);
     }
 
-    // we don't need separate tokens for each form - that would be both wasteful,
-    // and would increase the number of valid tokens that could be guessed
-    // (particularly as at most one would ever be consumed & so burnt, leaving
-    // lots of valid tokens lying around).  So check that one token is shared
-    // across all of the forms
     public function testSingleCodeSharedAcrossForms()
     {
         $sut = new HTMLDocumentProtector(self::THREE_FORMS, new ArrayTokenStore());
-        $sut->protectAndInject();
+        $sut->protectAndInject(HTMLDocumentProtector::ONE_TOKEN_PER_PAGE);
 
         $doc = $sut->getHTMLDocument();
         $token = null;
@@ -145,6 +140,22 @@ HTML;
             } else {
                 $this->assertEquals($token, $input->getAttribute("value"));
             }
+        }
+    }
+
+    public function testUniqueCodePerForm()
+    {
+        $sut = new HTMLDocumentProtector(self::THREE_FORMS, new ArrayTokenStore());
+        $sut->protectAndInject(HTMLDocumentProtector::ONE_TOKEN_PER_FORM);
+
+        $doc = $sut->getHTMLDocument();
+        $prevToken = "a"; // give it a non-null value for the first comparison
+        $newToken = null;
+        foreach ($doc->querySelectorAll(
+            "input[name='" . HTMLDocumentProtector::$TOKEN_NAME . "']") as $input) {
+            $newToken = $token = $input->getAttribute("value");
+            $this->assertNotEquals($newToken, $prevToken);
+            $prevToken = $newToken;
         }
     }
 }#

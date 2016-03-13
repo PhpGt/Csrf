@@ -3,4 +3,5 @@
 composer.phar
 /vendor
 /test/_Report
+/docs
 .php_cs.cache

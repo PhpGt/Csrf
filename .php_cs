@@ -4,6 +4,7 @@ $finder = Symfony\CS\Finder\DefaultFinder::create()
     ->in(__DIR__ . "/src")
     ->in(__DIR__ . "/test")
     ->exclude(__DIR__ . "/test/_Report")
+    ->exclude(__DIR__ . "/docs")
 ;
 
 return Symfony\CS\Config\Config::create()
