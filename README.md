@@ -16,9 +16,13 @@ Automatic protection from Cross-Site Request Forgery for PHP 7 projects
     <img src="https://img.shields.io/scrutinizer/coverage/g/phpgt/csrf/master.svg?style=flat-square" alt="Code coverage" />
 </a>
 
+<wiki-marker-start name="intro" />
 
 This library handles [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)) protection automatically for you — including generating tokens, injecting them into all forms in the page and then verifying that a valid token is present whenever a POST request is received.
 
+<wiki-marker-end />
+
+<wiki-marker-start name="usage" />
 
 ## Protection in Three Steps
 
@@ -86,3 +90,5 @@ By default, 32 character tokens are generated.  They use characters from the set
 #### Special Note About AJAX Clients
 
 Note that if several of the forms on your page could be submitted without reloading the page (which is uncommon, but could happen if you're using AJAX and not reloading the page using on the server response), you will want to call `$page->protectAndInject(HTMLDocumentProtector::TOKEN_PER_FORM);`, to have a unique token injected into each form.  This uses more server resources, and means there are far more unused tokens that could be guessed, but is unavoidable.  (Remember, if you'll still need to parse the new token for that form out of the page response and update the client-side form, otherwise a second submit would fail as the original token will have been spent.)
+
+<wiki-marker-end />
