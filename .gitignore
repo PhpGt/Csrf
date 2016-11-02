@@ -2,6 +2,6 @@
 /*.sublime-*
 composer.phar
 /vendor
-/test/_Report
+/test/unit/report
 /docs
 .php_cs.cache
