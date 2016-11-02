@@ -33,7 +33,7 @@
 
   "autoload": {
     "psr-4": {
-      "phpgt\\csrf\\": "./src"
+      "phpgt\\": "./src"
     }
   }
 }
