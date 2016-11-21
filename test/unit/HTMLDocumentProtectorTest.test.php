@@ -82,6 +82,14 @@ HTML;
 </html>
 HTML;
 
+    const NO_HEAD
+        = <<<HTML
+<!doctype html>
+<html>
+</html>
+HTML;
+
+
     public function testConstructFromString()
     {
         $sut = new HTMLDocumentProtector(self::NO_FORMS, new ArrayTokenStore());
@@ -192,6 +200,17 @@ HTML;
             $this->assertNotEquals($newToken, $prevToken);
             $prevToken = $newToken;
         }
+    }
+
+    public function testMetaTagNoHead()
+    {
+        $sut = new HTMLDocumentProtector(self::NO_HEAD, new ArrayTokenStore());
+        $sut->protectAndInject(HTMLDocumentProtector::ONE_TOKEN_PER_PAGE);
+
+        $doc = $sut->getHTMLDocument();
+        $metaTag = $doc->querySelector("head meta[name='" . HTMLDocumentProtector::$TOKEN_NAME . "']");
+        $this->assertNotNull($metaTag);
+        $this->assertNotEmpty($metaTag->getAttribute("content"));
     }
 
     public function testMetaTagAlreadyExists()

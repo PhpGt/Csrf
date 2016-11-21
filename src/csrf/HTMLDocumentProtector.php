@@ -97,7 +97,14 @@ class HTMLDocumentProtector
         if ($meta === null) {
             $meta = $this->doc->createElement("meta");
             $meta->setAttribute("name", self::$TOKEN_NAME);
-            $this->doc->querySelector("head")->appendChild($meta);
+
+            $head = $this->doc->querySelector("head");
+            if($head === null) {
+                $head = $this->doc->createElement("head");
+                $this->doc->querySelector("html")->appendChild($head);
+            }
+
+            $head->appendChild($meta);
         }
         $meta->setAttribute("content", $token);
     }
