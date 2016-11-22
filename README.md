@@ -14,6 +14,9 @@
 <a href="https://scrutinizer-ci.com/g/phpgt/csrf" target="_blank">
     <img src="https://img.shields.io/scrutinizer/coverage/g/phpgt/csrf/master.svg?style=flat-square" alt="Code coverage" />
 </a>
+<a href="https://packagist.org/packages/phpgt/csrf" target="_blank">
+    <img src="https://img.shields.io/packagist/v/phpgt/csrf.svg?style=flat-square" alt="Current version" />
+</a>
 
 <wiki-marker-start name="intro" />
 
@@ -38,6 +41,8 @@ Each is just a single method call, but you need to set up first.
 Start by creating the TokenStore.  There is currently a single implementation — the `ArrayTokenStore`.  Because the `ArrayTokenStore` is not peristent, you need to save it between page requests so that tokens generated for one page request can be checked on another.  The easiest way to save it is to put it on the `Session`:
 
 ```php
+use phpgt\csrf\ArrayTokenStore;
+
 // check to see if there's already a token store for this session, and
 // create one if not
 if(!isset($_SESSION["phpgt/csrf/tokenstore"])) {
@@ -53,6 +58,8 @@ $tokenStore = $_SESSION["phpgt/csrf/tokenstore"];
 Before running any other code (especially things that could affect data), you should check to make sure that there's a valid CSRF token in place if it's needed.  That step is also very straightforward:
 
 ```php
+use phpgt\csrf\exception\CSRFException;
+
 try {
     $tokenStore->processAndVerify();
 
@@ -69,9 +76,11 @@ If the request contains a POST and there is no valid CSRF token, a `CSRFExceptio
 Finally, once you've finished processing your html code and it's ready to send back to the client, you should inject the CSRF tokens.  If you don't, the request will fail to pass Step 2 when the page gets submitted!
 
 ```php
+use phpgt\csrf\HTMLDocumentProtector;
+
 // the html can come in as anything accepted by phpgt\dom - here it's a
 // plain string in a variable
-$htmlIn = "<html>...</html>"
+$htmlIn = "<html>...</html>";
 
 // now do the processing
 $page = new HTMLDocumentProtector($html, $tokenStore);
