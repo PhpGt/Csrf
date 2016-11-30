@@ -1,9 +1,9 @@
 <?php
-namespace phpgt\csrf;
+namespace Gt\Csrf;
 
-use phpgt\csrf\exception\CSRFTokenInvalidException;
-use phpgt\csrf\exception\CSRFTokenMissingException;
-use phpgt\csrf\exception\CSRFTokenSpentException;
+use Gt\Csrf\exception\CSRFTokenInvalidException;
+use Gt\Csrf\exception\CSRFTokenMissingException;
+use Gt\Csrf\exception\CSRFTokenSpentException;
 use RandomLib\Factory;
 use SecurityLib\Strength;
 
@@ -13,7 +13,7 @@ use SecurityLib\Strength;
  * functionality of generating the tokens is provided by the base class, but
  * can be overridden.
  *
- * @package phpgt\csrf
+ * @package Gt\Csrf
  */
 abstract class TokenStore
 {

@@ -1,10 +1,10 @@
 <?php
-namespace phpgt\csrf\exception;
+namespace Gt\Csrf\exception;
 
 /**
  * Indicates that the token specified is invalid.
  *
- * @package phpgt\csrf\exception
+ * @package Gt\Csrf\exception
  */
 class CSRFTokenInvalidException extends CSRFException
 {

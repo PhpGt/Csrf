@@ -1,5 +1,5 @@
 <?php
-namespace phpgt\csrf;
+namespace Gt\Csrf;
 
 class HTMLDocumentProtectorTest extends \PHPUnit_Framework_TestCase
 {
