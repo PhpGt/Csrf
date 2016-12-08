@@ -1,5 +1,5 @@
 <?php
-namespace phpgt\csrf;
+namespace Gt\Csrf;
 
 // NOTE - only test the non-abstract functionality
 class TokenStoreTest extends \PHPUnit_Framework_TestCase
@@ -35,7 +35,7 @@ HTML;
         $_POST["doink"] = "binky";
         $sut = new ArrayTokenStore();
         $this->expectException(
-            "\\phpgt\\csrf\\exception\\CSRFTokenMissingException");
+            "\\Gt\\Csrf\\exception\\CSRFTokenMissingException");
         $sut->processAndVerify();
     }
 
@@ -46,7 +46,7 @@ HTML;
         $_POST[ HTMLDocumentProtector::$TOKEN_NAME ] = "12321";
         $sut = new ArrayTokenStore();
         $this->expectException(
-            "\\phpgt\\csrf\\exception\\CSRFTokenInvalidException");
+            "\\Gt\\Csrf\\exception\\CSRFTokenInvalidException");
         $sut->processAndVerify();
     }
 
@@ -63,7 +63,7 @@ HTML;
         $_POST[ HTMLDocumentProtector::$TOKEN_NAME ] = $token;
 
         $this->expectException(
-            "\\phpgt\\csrf\\exception\\CSRFTokenSpentException");
+            "\\Gt\\Csrf\\exception\\CSRFTokenSpentException");
         $tokenStore->processAndVerify();
     }
 

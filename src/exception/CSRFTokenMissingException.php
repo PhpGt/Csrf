@@ -1,9 +1,9 @@
 <?php
-namespace phpgt\csrf\exception;
+namespace Gt\Csrf\exception;
 
 /**
  * Indicates that no token was found on the request.
- * @package phpgt\csrf\exception
+ * @package Gt\Csrf\exception
  */
 class CSRFTokenMissingException extends CSRFException
 {

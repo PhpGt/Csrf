@@ -1,10 +1,10 @@
 <?php
-namespace phpgt\csrf\exception;
+namespace Gt\Csrf\exception;
 
 /**
  * A base class from which other CSRF exceptions inherit.
  *
- * @package phpgt\csrf\exception
+ * @package Gt\Csrf\exception
  */
 class CSRFException extends \Exception
 {

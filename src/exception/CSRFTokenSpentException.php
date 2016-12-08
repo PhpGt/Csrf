@@ -1,10 +1,10 @@
 <?php
-namespace phpgt\csrf\exception;
+namespace Gt\Csrf\exception;
 
 /**
  * The token supplied has been used already.
  *
- * @package phpgt\csrf\exception
+ * @package Gt\Csrf\exception
  */
 class CSRFTokenSpentException extends CSRFException
 {

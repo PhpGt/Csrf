@@ -1,5 +1,5 @@
 <?php
-namespace phpgt\csrf;
+namespace Gt\Csrf;
 
 class ArrayTokenStoreTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,7 +20,7 @@ class ArrayTokenStoreTest extends \PHPUnit_Framework_TestCase
 
         // see if a non-existent token passes
         $this->expectException(
-            "\\phpgt\\csrf\\exception\\CSRFTokenInvalidException");
+            "\\Gt\\Csrf\\exception\\CSRFTokenInvalidException");
         $sut->verifyToken("mickey mouse");
     }
 
@@ -38,7 +38,7 @@ class ArrayTokenStoreTest extends \PHPUnit_Framework_TestCase
 
         // and make sure it no longer passes verification
         $this->expectException(
-            "\\phpgt\\csrf\\exception\\CSRFTokenSpentException");
+            "\\Gt\\Csrf\\exception\\CSRFTokenSpentException");
         $sut->verifyToken($token);
     }
 
@@ -59,7 +59,7 @@ class ArrayTokenStoreTest extends \PHPUnit_Framework_TestCase
         $sut->verifyToken($lastToken);
         // now we've hit the max, the original token should no longer be valid
         $this->expectException(
-            "\\phpgt\\csrf\\exception\\CSRFTokenInvalidException");
+            "\\Gt\\Csrf\\exception\\CSRFTokenInvalidException");
         $sut->verifyToken($firstToken);
     }
 
@@ -85,7 +85,7 @@ class ArrayTokenStoreTest extends \PHPUnit_Framework_TestCase
         $sut->verifyToken($lastToken);
         // now we've hit the max, the original token should no longer be valid
         $this->expectException(
-            "\\phpgt\\csrf\\exception\\CSRFTokenInvalidException");
+            "\\Gt\\Csrf\\exception\\CSRFTokenInvalidException");
         $sut->verifyToken($firstToken);
     }
 }
