@@ -4,19 +4,19 @@ This library handles [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_F
 
 ***
 
-<a href="https://gitter.im/phpgt/csrf" target="_blank">
+<a href="https://gitter.im/PhpGt/Csrf" target="_blank">
     <img src="https://img.shields.io/gitter/room/PhpGt/Csrf.svg?style=flat-square" alt="Gitter chat" />
 </a>
-<a href="https://circleci.com/gh/phpgt/csrf" target="_blank">
+<a href="https://circleci.com/gh/PhpGt/Csrf" target="_blank">
     <img src="https://img.shields.io/circleci/project/PhpGt/Csrf/master.svg?style=flat-square" alt="Build status" />
 </a>
-<a href="https://scrutinizer-ci.com/g/phpgt/csrf" target="_blank">
+<a href="https://scrutinizer-ci.com/g/PhpGt/Csrf" target="_blank">
     <img src="https://img.shields.io/scrutinizer/g/PhpGt/Csrf/master.svg?style=flat-square" alt="Code quality" />
 </a>
-<a href="https://scrutinizer-ci.com/g/phpgt/csrf" target="_blank">
+<a href="https://scrutinizer-ci.com/g/PhpGt/Csrf" target="_blank">
     <img src="https://img.shields.io/scrutinizer/coverage/g/PhpGt/Csrf/master.svg?style=flat-square" alt="Code coverage" />
 </a>
-<a href="https://packagist.org/packages/phpgt/csrf" target="_blank">
+<a href="https://packagist.org/packages/PhpGt/Csrf" target="_blank">
     <img src="https://img.shields.io/packagist/v/PhpGt/Csrf.svg?style=flat-square" alt="Current version" />
 </a>
 
