@@ -1,9 +1,9 @@
 <?php
 namespace Gt\Csrf;
 
-use Gt\Csrf\exception\CSRFTokenInvalidException;
-use Gt\Csrf\exception\CSRFTokenMissingException;
-use Gt\Csrf\exception\CSRFTokenSpentException;
+use Gt\Csrf\Exception\CSRFTokenInvalidException;
+use Gt\Csrf\Exception\CSRFTokenMissingException;
+use Gt\Csrf\Exception\CSRFTokenSpentException;
 use RandomLib\Factory;
 use SecurityLib\Strength;
 
