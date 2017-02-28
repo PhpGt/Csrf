@@ -99,7 +99,7 @@ class HTMLDocumentProtector
             $meta->setAttribute("name", self::$TOKEN_NAME);
 
             $head = $this->doc->querySelector("head");
-            if($head === null) {
+            if ($head === null) {
                 $head = $this->doc->createElement("head");
                 $this->doc->querySelector("html")->appendChild($head);
             }

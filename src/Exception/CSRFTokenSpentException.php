@@ -1,5 +1,5 @@
 <?php
-namespace Gt\Csrf\exception;
+namespace Gt\Csrf\Exception;
 
 /**
  * The token supplied has been used already.

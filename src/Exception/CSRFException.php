@@ -1,5 +1,5 @@
 <?php
-namespace Gt\Csrf\exception;
+namespace Gt\Csrf\Exception;
 
 /**
  * A base class from which other CSRF exceptions inherit.

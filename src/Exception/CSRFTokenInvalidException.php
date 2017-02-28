@@ -1,5 +1,5 @@
 <?php
-namespace Gt\Csrf\exception;
+namespace Gt\Csrf\Exception;
 
 /**
  * Indicates that the token specified is invalid.
