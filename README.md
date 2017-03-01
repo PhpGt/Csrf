@@ -4,9 +4,6 @@ This library handles [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_F
 
 ***
 
-<a href="https://gitter.im/PhpGt/Csrf" target="_blank">
-    <img src="https://img.shields.io/gitter/room/PhpGt/Csrf.svg?style=flat-square" alt="Gitter chat" />
-</a>
 <a href="https://circleci.com/gh/PhpGt/Csrf" target="_blank">
     <img src="https://img.shields.io/circleci/project/PhpGt/Csrf/master.svg?style=flat-square" alt="Build status" />
 </a>
