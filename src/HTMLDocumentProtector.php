@@ -1,7 +1,7 @@
 <?php
 namespace Gt\Csrf;
 
-use phpgt\dom\HTMLDocument;
+use Gt\Dom\HTMLDocument;
 
 class HTMLDocumentProtector
 {
@@ -24,7 +24,7 @@ class HTMLDocumentProtector
      * @param            $html       string|HTMLDocument The html document
      *                               whose forms should be injected with CSRF
      *                               tokens.  This can either be a
-     *                               \phpgt\dom\HTMLDocument or anything that
+     *                               Gt\Dom\HTMLDocument or anything that
      *                               can be used to construct one (such as
      *                               string).
      * @param            $tokenStore TokenStore The TokenStore implementation

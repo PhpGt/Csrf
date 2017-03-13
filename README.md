@@ -69,7 +69,7 @@ Finally, once you've finished processing your html code and it's ready to send b
 ```php
 use phpgt\csrf\HTMLDocumentProtector;
 
-// the html can come in as anything accepted by phpgt\dom - here it's a
+// the html can come in as anything accepted by Gt\Dom\HTMLDocument - here it's a
 // plain string in a variable
 $htmlIn = "<html>...</html>";
 
