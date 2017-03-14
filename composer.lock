@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7b78a6f3d947a33ffc6ecb21e422fad3",
+    "hash": "9dfae55e68b779c350e71ccddca0a47f",
     "content-hash": "dbd8daa5f42f2896c335bdfed34335ce",
     "packages": [
         {
@@ -110,16 +110,16 @@
         },
         {
             "name": "phpgt/dom",
-            "version": "v0.3.1",
+            "version": "v0.3.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phpgt/dom.git",
-                "reference": "54a9b1b08417a08eb829bcf798e6d3918ba8f392"
+                "url": "https://github.com/PhpGt/Dom.git",
+                "reference": "635596cb938830b8e45ae3e0d884719c7338802c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpgt/dom/zipball/54a9b1b08417a08eb829bcf798e6d3918ba8f392",
-                "reference": "54a9b1b08417a08eb829bcf798e6d3918ba8f392",
+                "url": "https://api.github.com/repos/PhpGt/Dom/zipball/635596cb938830b8e45ae3e0d884719c7338802c",
+                "reference": "635596cb938830b8e45ae3e0d884719c7338802c",
                 "shasum": ""
             },
             "require": {
@@ -132,7 +132,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "phpgt\\dom\\": "./src"
+                    "Gt\\Dom\\": "./src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -146,7 +146,7 @@
                 }
             ],
             "description": "The modern DOM API for PHP 7 projects.",
-            "time": "2016-07-17 12:13:46"
+            "time": "2016-11-18 15:04:03"
         },
         {
             "name": "symfony/css-selector",

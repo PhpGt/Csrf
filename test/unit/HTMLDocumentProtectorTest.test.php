@@ -1,6 +1,8 @@
 <?php
 namespace Gt\Csrf;
 
+use Gt\Dom\HTMLDocument;
+
 class HTMLDocumentProtectorTest extends \PHPUnit_Framework_TestCase
 {
     const NO_FORMS
@@ -94,14 +96,14 @@ HTML;
     {
         $sut = new HTMLDocumentProtector(self::NO_FORMS, new ArrayTokenStore());
         $doc = $sut->getHTMLDocument();
-        $this->assertInstanceOf("\\phpgt\\dom\\HTMLDocument", $doc);
+        $this->assertInstanceOf(HTMLDocument::class, $doc);
         $this->assertEquals(
             "Test HTML", $doc->querySelector("title")->textContent);
     }
 
     public function testConstructFromDomDocument()
     {
-        $domDoc = new \phpgt\dom\HTMLDocument(self::ONE_FORM);
+        $domDoc = new \Gt\Dom\HTMLDocument(self::ONE_FORM);
         $sut = new HTMLDocumentProtector($domDoc, new ArrayTokenStore());
         $doc = $sut->getHTMLDocument();
         $this->assertSame($domDoc, $doc);
