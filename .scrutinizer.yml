@@ -1,11 +1,11 @@
 build:
   environment:
     php:
-      version: 7.0.8
+      version: 7.1.0
   tests:
     override:
       -
-        command: 'vendor/bin/phpunit --coverage-clover=coverage'
+        command: 'vendor/bin/phpunit test/unit --coverage-clover coverage --whitelist src'
         coverage:
           file: 'coverage'
           format: 'php-clover'
