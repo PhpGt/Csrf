@@ -30,4 +30,4 @@ jobs:
 
       - store_artifacts:
           path: test/unit/_coverage
-          prefix: test/unit/_coverage
+          destination: /home/circleci/repo/test/unit/_coverage
