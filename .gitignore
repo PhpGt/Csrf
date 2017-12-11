@@ -1,7 +1,3 @@
 /.idea
-/*.sublime-*
-composer.phar
 /vendor
-/test/unit/report
-/docs
-.php_cs.cache
+/test/unit/_coverage
