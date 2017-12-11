@@ -2,8 +2,9 @@
 namespace Gt\Csrf;
 
 use Gt\Dom\HTMLDocument;
+use PHPUnit\Framework\TestCase;
 
-class HTMLDocumentProtectorTest extends \PHPUnit_Framework_TestCase {
+class HTMLDocumentProtectorTest extends TestCase {
 	const NO_FORMS
 		= <<<HTML
 <!doctype html>

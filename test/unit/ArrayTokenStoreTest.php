@@ -1,7 +1,9 @@
 <?php
 namespace Gt\Csrf;
 
-class ArrayTokenStoreTest extends \PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class ArrayTokenStoreTest extends TestCase {
 	public function testATokenExists() {
 		$sut = new ArrayTokenStore();
 		// generate a token

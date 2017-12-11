@@ -1,8 +1,10 @@
 <?php
 namespace Gt\Csrf;
 
-// NOTE - only test the non-abstract functionality
-class TokenStoreTest extends \PHPUnit_Framework_TestCase {
+use Gt\Csrf\Exception\CsrfException;
+use PHPUnit\Framework\TestCase;
+
+class TokenStoreTest extends TestCase {
 	const ONE_FORM
 		= <<<HTML
 <!doctype html>
@@ -23,8 +25,15 @@ HTML;
 
 	// no post request received
 	public function testNoPOST() {
-		$sut = new ArrayTokenStore();
-		$sut->processAndVerify();
+		$exception = null;
+
+		try {
+			$sut = new ArrayTokenStore();
+			$sut->processAndVerify();
+		}
+		catch(CsrfException $exception) {}
+
+		self::assertNull($exception);
 	}
 
 	// POST request received but without a token
@@ -72,7 +81,14 @@ HTML;
 		// add the token as if it were from a previous page
 		$_POST[HTMLDocumentProtector::$TOKEN_NAME] = $token;
 
-		$tokenStore->processAndVerify();
+		$exception = null;
+
+		try {
+			$tokenStore->processAndVerify();
+		}
+		catch(CsrfException $exception) {}
+
+		self::assertNull($exception);
 	}
 
 	// check that repeated calls to the token generator result in unique tokens
