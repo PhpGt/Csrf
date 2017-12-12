@@ -18,15 +18,9 @@ class HTMLDocumentProtector {
 	private $document;
 	private $tokenStore;
 
-	public function __construct($html, TokenStore $tokenStore) {
+	public function __construct(HTMLDocument $document, TokenStore $tokenStore) {
+		$this->document = $document;
 		$this->tokenStore = $tokenStore;
-
-		if($html instanceof HTMLDocument) {
-			$this->document = $html;
-		}
-		else {
-			$this->document = new HTMLDocument($html);
-		}
 	}
 
 	/**

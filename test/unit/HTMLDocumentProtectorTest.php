@@ -93,7 +93,7 @@ HTML;
 
 
 	public function testConstructFromString() {
-		$sut = new HTMLDocumentProtector(self::NO_FORMS, new ArrayTokenStore());
+		$sut = new HTMLDocumentProtector(new HTMLDocument(self::NO_FORMS), new ArrayTokenStore());
 		$doc = $sut->getHTMLDocument();
 		$this->assertInstanceOf(HTMLDocument::class, $doc);
 		$this->assertEquals(
@@ -110,7 +110,7 @@ HTML;
 	}
 
 	public function testZeroForms() {
-		$sut = new HTMLDocumentProtector(self::NO_FORMS, new ArrayTokenStore());
+		$sut = new HTMLDocumentProtector(new HTMLDocument(self::NO_FORMS), new ArrayTokenStore());
 		$sut->protectAndInject();
 
 		$built = $sut->getHTMLDocument();
@@ -125,7 +125,7 @@ HTML;
 	}
 
 	public function testSingleForm() {
-		$sut = new HTMLDocumentProtector(self::ONE_FORM, new ArrayTokenStore());
+		$sut = new HTMLDocumentProtector(new HTMLDocument(self::ONE_FORM), new ArrayTokenStore());
 		$sut->protectAndInject();
 
 		// check that the token has been injected
@@ -148,7 +148,7 @@ HTML;
 	}
 
 	public function testMultipleForms() {
-		$sut = new HTMLDocumentProtector(self::THREE_FORMS, new ArrayTokenStore());
+		$sut = new HTMLDocumentProtector(new HTMLDocument(self::THREE_FORMS), new ArrayTokenStore());
 		$sut->protectAndInject();
 
 		// check that the token has been injected in all forms
@@ -162,7 +162,7 @@ HTML;
 	}
 
 	public function testSingleCodeSharedAcrossForms() {
-		$sut = new HTMLDocumentProtector(self::THREE_FORMS, new ArrayTokenStore());
+		$sut = new HTMLDocumentProtector(new HTMLDocument(self::THREE_FORMS), new ArrayTokenStore());
 		$sut->protectAndInject(HTMLDocumentProtector::ONE_TOKEN_PER_PAGE);
 
 		$doc = $sut->getHTMLDocument();
@@ -182,7 +182,7 @@ HTML;
 	}
 
 	public function testUniqueCodePerForm() {
-		$sut = new HTMLDocumentProtector(self::THREE_FORMS, new ArrayTokenStore());
+		$sut = new HTMLDocumentProtector(new HTMLDocument(self::THREE_FORMS), new ArrayTokenStore());
 		$sut->protectAndInject(HTMLDocumentProtector::ONE_TOKEN_PER_FORM);
 
 		$doc = $sut->getHTMLDocument();
@@ -199,7 +199,7 @@ HTML;
 	}
 
 	public function testMetaTagNoHead() {
-		$sut = new HTMLDocumentProtector(self::NO_HEAD, new ArrayTokenStore());
+		$sut = new HTMLDocumentProtector(new HTMLDocument(self::NO_HEAD), new ArrayTokenStore());
 		$sut->protectAndInject(HTMLDocumentProtector::ONE_TOKEN_PER_PAGE);
 
 		$doc = $sut->getHTMLDocument();
@@ -209,7 +209,7 @@ HTML;
 	}
 
 	public function testMetaTagAlreadyExists() {
-		$sut = new HTMLDocumentProtector(self::HAS_META_ALREADY, new ArrayTokenStore());
+		$sut = new HTMLDocumentProtector(new HTMLDocument(self::HAS_META_ALREADY), new ArrayTokenStore());
 		$sut->protectAndInject(HTMLDocumentProtector::ONE_TOKEN_PER_PAGE);
 
 		$doc = $sut->getHTMLDocument();
@@ -221,7 +221,7 @@ HTML;
 	}
 
 	public function testDifferentTokenName() {
-		$sut = new HTMLDocumentProtector(self::HAS_META_ALREADY, new ArrayTokenStore());
+		$sut = new HTMLDocumentProtector(new HTMLDocument(self::HAS_META_ALREADY), new ArrayTokenStore());
 		$sut::$TOKEN_NAME = "binkyboo";
 		$sut->protectAndInject();
 
