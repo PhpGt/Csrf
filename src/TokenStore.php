@@ -32,6 +32,8 @@ abstract class TokenStore {
 			self::$MAX_TOKENS = $maxTokens;
 		}
 
+		// TODO: Remove when issue #45 is addressed.
+		error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 		$factory = new Factory();
 		$this->tokenGenerator = $factory->getGenerator(
 			new Strength(self::$strength));
