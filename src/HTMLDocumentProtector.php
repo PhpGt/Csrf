@@ -76,12 +76,12 @@ class HTMLDocumentProtector {
 			"head meta[name='" . self::$TOKEN_NAME . "']"
 		);
 
-		if($meta === null) {
+		if(is_null($meta)) {
 			$meta = $this->document->createElement("meta");
 			$meta->setAttribute("name", self::$TOKEN_NAME);
 
 			$head = $this->document->querySelector("head");
-			if($head === null) {
+			if(is_null($head)) {
 				$head = $this->document->createElement("head");
 				$htmlElement = $this->document->querySelector("html");
 				$htmlElement->appendChild($head);

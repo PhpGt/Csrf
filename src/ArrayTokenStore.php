@@ -28,7 +28,7 @@ class ArrayTokenStore extends TokenStore {
 				$token
 			);
 		}
-		elseif($this->store[$token] !== null) {
+		elseif(!is_null($this->store[$token])) {
 			throw new CsrfTokenSpentException(
 				$token,
 				$this->store[$token]
