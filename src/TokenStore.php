@@ -4,7 +4,7 @@ namespace Gt\Csrf;
 use Gt\Csrf\Exception\CsrfTokenInvalidException;
 use Gt\Csrf\Exception\CsrfTokenMissingException;
 use Gt\Csrf\Exception\CsrfTokenSpentException;
-use RandomLib\Factory;
+use RandomLib\Factory as RandomLibFactory;
 use SecurityLib\Strength;
 
 /**
@@ -34,7 +34,7 @@ abstract class TokenStore {
 
 		// TODO: Remove when issue #45 is addressed.
 		error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
-		$factory = new Factory();
+		$factory = new RandomLibFactory();
 		$this->tokenGenerator = $factory->getGenerator(
 			new Strength(self::$strength));
 	}
