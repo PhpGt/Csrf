@@ -6,19 +6,19 @@ This library handles [CSRF protection](https://www.owasp.org/index.php/Cross-Sit
 ***
 
 <a href="https://circleci.com/gh/PhpGt/Csrf" target="_blank">
-    <img src="https://img.shields.io/circleci/project/PhpGt/Csrf/master.svg?style=flat-square" alt="Build status" />
+    <img src="https://badge.status.php.gt/csrf-build.svg" alt="Build status" />
 </a>
 <a href="https://scrutinizer-ci.com/g/PhpGt/Csrf" target="_blank">
-    <img src="https://img.shields.io/scrutinizer/g/PhpGt/Csrf/master.svg?style=flat-square" alt="Code quality" />
+    <img src="https://badge.status.php.gt/csrf-quality.svg" alt="Code quality" />
 </a>
 <a href="https://scrutinizer-ci.com/g/PhpGt/Csrf" target="_blank">
-    <img src="https://img.shields.io/scrutinizer/coverage/g/PhpGt/Csrf/master.svg?style=flat-square" alt="Code coverage" />
+    <img src="https://badge.status.php.gt/csrf-coverage.svg" alt="Code coverage" />
 </a>
 <a href="https://packagist.org/packages/PhpGt/Csrf" target="_blank">
-    <img src="https://img.shields.io/packagist/v/PhpGt/Csrf.svg?style=flat-square" alt="Current version" />
+    <img src="https://badge.status.php.gt/csrf-version.svg" alt="Current version" />
 </a>
 <a href="http://www.php.gt/csrf" target="_blank">
-	<img src="https://img.shields.io/badge/docs-www.php.gt/csrf-26a5e3.svg?style=flat-square" alt="PHP.G/Csrf documentation" />
+	<img src="https://badge.status.php.gt/csrf-docs.svg" alt="PHP.G/Csrf documentation" />
 </a>
 
 Usage: Protection in Three Steps
