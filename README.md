@@ -18,7 +18,7 @@ This library handles [CSRF protection](https://www.owasp.org/index.php/Cross-Sit
     <img src="https://badge.status.php.gt/csrf-version.svg" alt="Current version" />
 </a>
 <a href="http://www.php.gt/csrf" target="_blank">
-	<img src="https://badge.status.php.gt/csrf-docs.svg" alt="PHP.G/Csrf documentation" />
+	<img src="https://badge.status.php.gt/csrf-docs.svg" alt="PHP.Gt/Csrf documentation" />
 </a>
 
 Usage: Protection in Three Steps
@@ -36,15 +36,15 @@ Each is just a single method call, but you need to set up first.
 Start by creating the TokenStore. There is currently a single implementation — the `ArrayTokenStore`.  Because the `ArrayTokenStore` is not persistent, you need to save it between page requests so that tokens generated for one page request can be checked on another. The easiest way to save it is to put it on the `Session`:
 
 ```php
-use phpgt\csrf\ArrayTokenStore;
+use Gt\Csrf\ArrayTokenStore;
 
 // check to see if there's already a token store for this session, and
 // create one if not
-if(!isset($_SESSION["phpgt/csrf/tokenstore"])) {
-	$_SESSION["phpgt/csrf/tokenstore"] = new ArrayTokenStore();
+if(!$session->has("gt.csrf")) {
+	$session->set("gt.csrf", new ArrayTokenStore());
 }
 
-$tokenStore = $_SESSION["phpgt/csrf/tokenstore"];
+$tokenStore = $session->get("gt.csrf");
 ```
 
 ### Step 2: Verify
@@ -52,7 +52,7 @@ $tokenStore = $_SESSION["phpgt/csrf/tokenstore"];
 Before running any other code (especially things that could affect data), you should check to make sure that there's a valid CSRF token in place if it's needed. That step is also very straightforward:
 
 ```php
-use phpgt\csrf\exception\CSRFException;
+use Gt\Csrf\Exception\CSRFException;
 
 try {
 	$tokenStore->processAndVerify();
@@ -91,7 +91,11 @@ By default, 32 character tokens are generated. They use characters from the set 
 Special Note About AJAX Clients
 -------------------------------
 
-Note that if several of the forms on your page could be submitted without reloading the page (which is uncommon, but could happen if you're using AJAX and not reloading the page using on the server response), you will want to call `$page->protectAndInject(HTMLDocumentProtector::TOKEN_PER_FORM);`, to have a unique token injected into each form. This uses more server resources, and means there are far more unused tokens that could be guessed, but is unavoidable. (Remember, if you'll still need to parse the new token for that form out of the page response and update the client-side form, otherwise a second submit would fail as the original token will have been spent.)
+Note that if there are several forms on your page, a unique token will be generated and injected into each form. When a form is submitted using AJAX, the response will contain a new token that must be refreshed in the page ready for the next submission.
+
+If you would prefer to have one token per page, shared across all forms, this can be configured by passing in the TOKEN_PER_PAGE parameter to the projectAndInject method: `$page->protectAndInject(HTMLDocumentProtector::TOKEN_PER_PAGE);`.
+
+Storing one token per page will reduce the amount of server resources required, but concurrent AJAX requests will fail which is why one token per form is the default.
 
 Alternatives to Storing Tokens on the Session
 ---------------------------------------------
