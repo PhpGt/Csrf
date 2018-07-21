@@ -32,11 +32,13 @@ abstract class TokenStore {
 			self::$MAX_TOKENS = $maxTokens;
 		}
 
-		// TODO: Remove when issue #45 is addressed.
-		error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+// TODO: Remove error_reporting when issue #45 is addressed.
+		$oldReportingLevel = error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 		$factory = new RandomLibFactory();
 		$this->tokenGenerator = $factory->getGenerator(
 			new Strength(self::$strength));
+// Set error_reporting back to what it was previously.
+		error_reporting($oldReportingLevel);
 	}
 
 	/**
