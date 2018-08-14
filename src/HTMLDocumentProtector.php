@@ -53,7 +53,7 @@ class HTMLDocumentProtector {
 				$csrfElement->setAttribute("name", static::$TOKEN_NAME);
 				$csrfElement->setAttribute("value", $token);
 				$csrfElement->setAttribute("type", "hidden");
-				$form->appendChild($csrfElement);
+				$form->insertBefore($csrfElement, $form->firstChild);
 
 				if($tokenSharing === self::ONE_TOKEN_PER_FORM) {
 					$token = $this->tokenStore->generateNewToken();
