@@ -9,29 +9,29 @@ use Gt\Csrf\Exception\CsrfTokenSpentException;
  * session - it has no other way of remembering the tokens!
  */
 class ArrayTokenStore extends TokenStore {
-	private $store = [];
+	private $arrayStore = [];
 
 	public function __construct(int $maxTokens = null) {
 		parent::__construct($maxTokens);
 	}
 
 	public function saveToken(string $token):void {
-		$this->store[$token] = null;
-		if(count($this->store) > self::$MAX_TOKENS) {
-			array_shift($this->store);
+		$this->arrayStore[$token] = null;
+		while(count($this->arrayStore) > self::$MAX_TOKENS) {
+			array_shift($this->arrayStore);
 		}
 	}
 
 	public function verifyToken(string $token):bool {
-		if(!array_key_exists($token, $this->store)) {
+		if(!array_key_exists($token, $this->arrayStore)) {
 			throw new CsrfTokenInvalidException(
 				$token
 			);
 		}
-		elseif(!is_null($this->store[$token])) {
+		elseif(!is_null($this->arrayStore[$token])) {
 			throw new CsrfTokenSpentException(
 				$token,
-				$this->store[$token]
+				$this->arrayStore[$token]
 			);
 		}
 		else {
@@ -40,6 +40,6 @@ class ArrayTokenStore extends TokenStore {
 	}
 
 	public function consumeToken(string $token):void {
-		$this->store[$token] = time();
+		$this->arrayStore[$token] = time();
 	}
 }
