@@ -29,7 +29,7 @@ HTML;
 
 		try {
 			$sut = new ArrayTokenStore();
-			$sut->processAndVerify();
+			$sut->processAndVerify([]);
 		}
 		catch(CsrfException $exception) {}
 
@@ -38,21 +38,23 @@ HTML;
 
 	// POST request received but without a token
 	public function testNoToken() {
-		$_POST["doink"] = "binky";
+		$post = [];
+		$post["doink"] = "binky";
 		$sut = new ArrayTokenStore();
 		$this->expectException(
 			"\\Gt\\Csrf\\exception\\CSRFTokenMissingException");
-		$sut->processAndVerify();
+		$sut->processAndVerify($post);
 	}
 
 	// POST request received with token but invalid
 	public function testInvalidToken() {
-		$_POST["doink"] = "binky";
-		$_POST[HTMLDocumentProtector::$TOKEN_NAME] = "12321";
+		$post = [];
+		$post["doink"] = "binky";
+		$post[HTMLDocumentProtector::$TOKEN_NAME] = "12321";
 		$sut = new ArrayTokenStore();
 		$this->expectException(
 			"\\Gt\\Csrf\\exception\\CSRFTokenInvalidException");
-		$sut->processAndVerify();
+		$sut->processAndVerify($post);
 	}
 
 	// POST request received with token but invalid
@@ -62,13 +64,14 @@ HTML;
 		$tokenStore->saveToken($token);
 		$tokenStore->consumeToken($token);
 
-		$_POST["doink"] = "binky";
+		$post = [];
+		$post["doink"] = "binky";
 		// add the token as if it were from a previous page
-		$_POST[HTMLDocumentProtector::$TOKEN_NAME] = $token;
+		$post[HTMLDocumentProtector::$TOKEN_NAME] = $token;
 
 		$this->expectException(
 			"\\Gt\\Csrf\\exception\\CSRFTokenSpentException");
-		$tokenStore->processAndVerify();
+		$tokenStore->processAndVerify($post);
 	}
 
 	// POST request received with token and valid
@@ -77,14 +80,15 @@ HTML;
 		$token = $tokenStore->generateNewToken();
 		$tokenStore->saveToken($token);
 
-		$_POST["doink"] = "binky";
+		$post = [];
+		$post["doink"] = "binky";
 		// add the token as if it were from a previous page
-		$_POST[HTMLDocumentProtector::$TOKEN_NAME] = $token;
+		$post[HTMLDocumentProtector::$TOKEN_NAME] = $token;
 
 		$exception = null;
 
 		try {
-			$tokenStore->processAndVerify();
+			$tokenStore->processAndVerify($post);
 		}
 		catch(CsrfException $exception) {}
 
