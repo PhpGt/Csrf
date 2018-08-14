@@ -71,15 +71,20 @@ abstract class TokenStore {
 	 * $_POST but it has already been consumed by a previous request.
 	 * @see TokenStore::verifyToken().
 	 */
-	public function processAndVerify():void {
-		// expect the token to be present on ALL post requests
-		if(!empty($_POST)) {
-			if(!isset($_POST[HTMLDocumentProtector::$TOKEN_NAME])) {
+	public function processAndVerify($postData):void {
+// Expect the token to be present on ALL post requests.
+		if(!is_array($postData)
+		&& method_exists($postData, "toArray")) {
+			$postData = $postData->toArray();
+		}
+
+		if(!empty($postData)) {
+			if(!isset($postData[HTMLDocumentProtector::$TOKEN_NAME])) {
 				throw new CsrfTokenMissingException();
 			}
 
-			$this->verifyToken($_POST[HTMLDocumentProtector::$TOKEN_NAME]);
-			$this->consumeToken($_POST[HTMLDocumentProtector::$TOKEN_NAME]);
+			$this->verifyToken($postData[HTMLDocumentProtector::$TOKEN_NAME]);
+			$this->consumeToken($postData[HTMLDocumentProtector::$TOKEN_NAME]);
 		}
 	}
 
