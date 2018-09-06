@@ -113,12 +113,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PhpGt/Dom.git",
-                "reference": "8b836d836989ff300d1f3db1a6855329fd1941a9"
+                "reference": "af76370e5a0e9e5d8aec3037505e1fdb88c941fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PhpGt/Dom/zipball/8b836d836989ff300d1f3db1a6855329fd1941a9",
-                "reference": "8b836d836989ff300d1f3db1a6855329fd1941a9",
+                "url": "https://api.github.com/repos/PhpGt/Dom/zipball/af76370e5a0e9e5d8aec3037505e1fdb88c941fa",
+                "reference": "af76370e5a0e9e5d8aec3037505e1fdb88c941fa",
                 "shasum": ""
             },
             "require": {
@@ -126,7 +126,7 @@
                 "symfony/css-selector": "3.2.*"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.4"
+                "phpunit/phpunit": "^6.4|^7.0"
             },
             "type": "library",
             "autoload": {
@@ -182,7 +182,7 @@
                 }
             ],
             "description": "The modern DOM API for PHP 7 projects.",
-            "time": "2018-08-10T09:54:04+00:00"
+            "time": "2018-09-04T11:22:16+00:00"
         },
         {
             "name": "phpgt/session",
@@ -190,12 +190,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PhpGt/Session.git",
-                "reference": "60bf640b34aa715490938b40d52b6f24febdd742"
+                "reference": "160fd87860448d1c1d2e016a1c2f50b9e930c0bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PhpGt/Session/zipball/60bf640b34aa715490938b40d52b6f24febdd742",
-                "reference": "60bf640b34aa715490938b40d52b6f24febdd742",
+                "url": "https://api.github.com/repos/PhpGt/Session/zipball/160fd87860448d1c1d2e016a1c2f50b9e930c0bb",
+                "reference": "160fd87860448d1c1d2e016a1c2f50b9e930c0bb",
                 "shasum": ""
             },
             "require": {
@@ -215,7 +215,7 @@
                 "MIT"
             ],
             "description": "Encapsulated user sessions.",
-            "time": "2018-08-23T10:36:11+00:00"
+            "time": "2018-09-03T07:47:28+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -278,12 +278,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "17becf3b5d22399af644022f9b5a9755eff4375a"
+                "reference": "8788c31191242bca77a260b1d2c2621f18c9c1c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/17becf3b5d22399af644022f9b5a9755eff4375a",
-                "reference": "17becf3b5d22399af644022f9b5a9755eff4375a",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8788c31191242bca77a260b1d2c2621f18c9c1c3",
+                "reference": "8788c31191242bca77a260b1d2c2621f18c9c1c3",
                 "shasum": ""
             },
             "require": {
@@ -325,7 +325,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2018-09-01T09:40:46+00:00"
+            "time": "2018-09-05T19:40:54+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -943,16 +943,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.3.3",
+            "version": "7.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "1bd5629cccfb2c0a9ef5474b4ff772349e1ec898"
+                "reference": "0356331bf62896dc56e3a15030b23b73f38b2935"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1bd5629cccfb2c0a9ef5474b4ff772349e1ec898",
-                "reference": "1bd5629cccfb2c0a9ef5474b4ff772349e1ec898",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0356331bf62896dc56e3a15030b23b73f38b2935",
+                "reference": "0356331bf62896dc56e3a15030b23b73f38b2935",
                 "shasum": ""
             },
             "require": {
@@ -1023,7 +1023,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-09-01T15:49:55+00:00"
+            "time": "2018-09-05T09:58:53+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
