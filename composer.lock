@@ -190,12 +190,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PhpGt/Session.git",
-                "reference": "615ef25b5cb38dfb36d576f8070d14c23a259577"
+                "reference": "e66ce47edab56388e6dfbb23e1d04bfbcc059b75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PhpGt/Session/zipball/615ef25b5cb38dfb36d576f8070d14c23a259577",
-                "reference": "615ef25b5cb38dfb36d576f8070d14c23a259577",
+                "url": "https://api.github.com/repos/PhpGt/Session/zipball/e66ce47edab56388e6dfbb23e1d04bfbcc059b75",
+                "reference": "e66ce47edab56388e6dfbb23e1d04bfbcc059b75",
                 "shasum": ""
             },
             "require": {
@@ -215,7 +215,7 @@
                 "MIT"
             ],
             "description": "Encapsulated user sessions.",
-            "time": "2018-09-06T07:42:20+00:00"
+            "time": "2018-09-10T08:27:50+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -278,19 +278,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "8788c31191242bca77a260b1d2c2621f18c9c1c3"
+                "reference": "8f58c558d3263405c13df40489c35fe1eefd8f0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8788c31191242bca77a260b1d2c2621f18c9c1c3",
-                "reference": "8788c31191242bca77a260b1d2c2621f18c9c1c3",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8f58c558d3263405c13df40489c35fe1eefd8f0e",
+                "reference": "8f58c558d3263405c13df40489c35fe1eefd8f0e",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^4.0",
+                "doctrine/coding-standard": "^5.0",
                 "ext-pdo": "*",
                 "ext-phar": "*",
                 "phpbench/phpbench": "^0.13",
@@ -325,7 +325,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2018-09-05T19:40:54+00:00"
+            "time": "2018-09-25T21:32:24+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -698,12 +698,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "dfb0bf3622f59fe43c983940c7ba06b126f26289"
+                "reference": "848f78b3309780fef7ec8c4666b7ab4e6b09b22f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/dfb0bf3622f59fe43c983940c7ba06b126f26289",
-                "reference": "dfb0bf3622f59fe43c983940c7ba06b126f26289",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/848f78b3309780fef7ec8c4666b7ab4e6b09b22f",
+                "reference": "848f78b3309780fef7ec8c4666b7ab4e6b09b22f",
                 "shasum": ""
             },
             "require": {
@@ -753,7 +753,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-08-21T05:26:12+00:00"
+            "time": "2018-10-04T03:41:23+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -761,12 +761,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "26bd9febb17aa5d46e51941d5d2e1cae83a4b851"
+                "reference": "050bedf145a257b1ff02746c31894800e5122946"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/26bd9febb17aa5d46e51941d5d2e1cae83a4b851",
-                "reference": "26bd9febb17aa5d46e51941d5d2e1cae83a4b851",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/050bedf145a257b1ff02746c31894800e5122946",
+                "reference": "050bedf145a257b1ff02746c31894800e5122946",
                 "shasum": ""
             },
             "require": {
@@ -803,7 +803,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2018-09-07T15:17:40+00:00"
+            "time": "2018-09-13T20:33:42+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -946,16 +946,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.3.5",
+            "version": "7.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7b331efabbb628c518c408fdfcaf571156775de2"
+                "reference": "f3837fa1e07758057ae06e8ddec6d06ba183f126"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7b331efabbb628c518c408fdfcaf571156775de2",
-                "reference": "7b331efabbb628c518c408fdfcaf571156775de2",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f3837fa1e07758057ae06e8ddec6d06ba183f126",
+                "reference": "f3837fa1e07758057ae06e8ddec6d06ba183f126",
                 "shasum": ""
             },
             "require": {
@@ -980,7 +980,7 @@
                 "sebastian/exporter": "^3.1",
                 "sebastian/global-state": "^2.0",
                 "sebastian/object-enumerator": "^3.0.3",
-                "sebastian/resource-operations": "^1.0",
+                "sebastian/resource-operations": "^2.0",
                 "sebastian/version": "^2.0.1"
             },
             "conflict": {
@@ -1000,7 +1000,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "7.3-dev"
+                    "dev-master": "7.4-dev"
                 }
             },
             "autoload": {
@@ -1026,7 +1026,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-09-08T15:14:29+00:00"
+            "time": "2018-10-05T04:05:24+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -1512,21 +1512,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/resource-operations.git",
-                "reference": "0f9911fea026d9737c9b357ddda0916ea3beaf1d"
+                "reference": "4d7a795d35b889bf80a0cc04e08d77cedfa917a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/resource-operations/zipball/0f9911fea026d9737c9b357ddda0916ea3beaf1d",
-                "reference": "0f9911fea026d9737c9b357ddda0916ea3beaf1d",
+                "url": "https://api.github.com/repos/sebastianbergmann/resource-operations/zipball/4d7a795d35b889bf80a0cc04e08d77cedfa917a9",
+                "reference": "4d7a795d35b889bf80a0cc04e08d77cedfa917a9",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0"
+                "php": "^7.1"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "2.0-dev"
                 }
             },
             "autoload": {
@@ -1546,7 +1546,7 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
-            "time": "2018-05-15T05:53:02+00:00"
+            "time": "2018-10-04T04:07:39+00:00"
         },
         {
             "name": "sebastian/version",
