@@ -40,7 +40,7 @@ use Gt\Csrf\ArrayTokenStore;
 
 // check to see if there's already a token store for this session, and
 // create one if not
-if(!$session->has("gt.csrf")) {
+if(!$session->contains("gt.csrf")) {
 	$session->set("gt.csrf", new ArrayTokenStore());
 }
 
