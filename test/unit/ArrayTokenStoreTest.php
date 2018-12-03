@@ -48,7 +48,7 @@ class ArrayTokenStoreTest extends TestCase {
 
 		$tokens = 1;
 		$lastToken = null;
-		while($tokens++ <= $sut::$MAX_TOKENS) {
+		while($tokens++ <= $sut->getMaxTokens()) {
 			$lastToken = $sut->generateNewToken();
 			$sut->saveToken($lastToken);
 		}
@@ -65,7 +65,7 @@ class ArrayTokenStoreTest extends TestCase {
 		$sut = new ArrayTokenStore($tokenLimit);
 
 		// check that the new limit has stuck
-		$this->assertEquals($tokenLimit, $sut::$MAX_TOKENS);
+		$this->assertEquals($tokenLimit, $sut->getMaxTokens());
 
 
 		$firstToken = $sut->generateNewToken();
