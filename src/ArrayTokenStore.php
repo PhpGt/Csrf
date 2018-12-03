@@ -17,7 +17,7 @@ class ArrayTokenStore extends TokenStore {
 
 	public function saveToken(string $token):void {
 		$this->arrayStore[$token] = null;
-		while(count($this->arrayStore) > self::$MAX_TOKENS) {
+		while(count($this->arrayStore) > $this->maxTokens) {
 			array_shift($this->arrayStore);
 		}
 	}

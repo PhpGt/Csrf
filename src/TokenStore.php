@@ -15,10 +15,10 @@ abstract class TokenStore {
 	/**
 	 * @var int|null The maximum number of tokens to be retained.
 	 */
-	public static $MAX_TOKENS = 1000;
-	private static $strength = Strength::MEDIUM;
-	private static $tokenLength = 32;
-	private $tokenGenerator;
+	protected $maxTokens = 1000;
+	protected $strength = Strength::MEDIUM;
+	protected $tokenLength = 32;
+	protected $tokenGenerator;
 
 	/**
 	 * An optional limit of the number of valid tokens the TokenStore will retain may be passed.
@@ -29,16 +29,20 @@ abstract class TokenStore {
 	 */
 	public function __construct(int $maxTokens = null) {
 		if(!is_null($maxTokens)) {
-			self::$MAX_TOKENS = $maxTokens;
+			$this->maxTokens = $maxTokens;
 		}
 
 // TODO: Remove error_reporting when issue #45 is addressed.
 		$oldReportingLevel = error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 		$factory = new RandomLibFactory();
 		$this->tokenGenerator = $factory->getGenerator(
-			new Strength(self::$strength));
+			new Strength($this->strength));
 // Set error_reporting back to what it was previously.
 		error_reporting($oldReportingLevel);
+	}
+
+	public function getMaxTokens():int {
+		return $this->maxTokens;
 	}
 
 	/**
@@ -47,7 +51,7 @@ abstract class TokenStore {
 	 * @see static::DEFAULT_MAX_TOKENS
 	 */
 	public function setTokenLength(int $newTokenLength):void {
-		self::$tokenLength = $newTokenLength;
+		$this->tokenLength = $newTokenLength;
 	}
 
 	/**
@@ -56,7 +60,7 @@ abstract class TokenStore {
 	 * @see TokenStore::saveToken() for storing a generated token.
 	 */
 	public function generateNewToken():string {
-		return $this->tokenGenerator->generateString(self::$tokenLength);
+		return $this->tokenGenerator->generateString($this->tokenLength);
 	}
 
 	/**

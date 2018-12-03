@@ -13,7 +13,6 @@ class SessionTokenStore extends TokenStore {
 
 	public function __construct(SessionStore $session, int $maxTokens = null) {
 		$this->session = $session;
-
 		parent::__construct($maxTokens);
 	}
 
@@ -21,7 +20,7 @@ class SessionTokenStore extends TokenStore {
 		$tokenList = $this->session->get(self::SESSION_KEY) ?? [];
 		$tokenList[$token] = null;
 
-		while(count($tokenList) > self::$MAX_TOKENS) {
+		while(count($tokenList) > $this->getMaxTokens()) {
 			array_shift($tokenList);
 		}
 
