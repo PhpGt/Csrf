@@ -50,7 +50,33 @@ class SessionTokenStoreTest extends TestCase {
 				$existingTokensWithNewToken
 			);
 
-		/** @var SessionStore $session*/
+		/** @var SessionStore $session */
+		$sessionTokenStore = new SessionTokenStore($session);
+		$sessionTokenStore->saveToken($tokenToSet);
+	}
+
+	public function testSaveTokenPastMaxTokens() {
+		$tokenToSet = uniqid("new-");
+		$existingTokens = [];
+		for($i = 0; $i < 10; $i++) {
+			$key = uniqid("existing-$i-");
+			$existingTokens[$key] = null;
+		}
+
+		$session = self::createMock(SessionStore::class);
+		$session->method("get")
+			->willReturn($existingTokens);
+		$session->method("getMaxTokens")
+			->willReturn(10);
+
+		$existingTokensWithNewToken = [];
+		foreach($existingTokens as $key => $value) {
+			$existingTokensWithNewToken[$key] = $value;
+		}
+		array_shift($existingTokensWithNewToken);
+		$existingTokensWithNewToken[$tokenToSet] = null;
+
+		/** @var SessionStore $session */
 		$sessionTokenStore = new SessionTokenStore($session);
 		$sessionTokenStore->saveToken($tokenToSet);
 	}
