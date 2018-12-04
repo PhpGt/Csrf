@@ -154,7 +154,7 @@ class SessionTokenStoreTest extends TestCase {
 			->willReturn($existingTokens);
 
 		$exception = null;
-		/** @var SessionStore $sesssion*/
+		/** @var SessionStore $session*/
 		$sesssionTokenStore = new SessionTokenStore($session);
 
 		try {
