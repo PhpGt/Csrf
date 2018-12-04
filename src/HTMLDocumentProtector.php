@@ -55,11 +55,25 @@ class HTMLDocumentProtector {
 			$this->tokenStore->saveToken($token);
 
 			foreach($forms as $form) {
-				$csrfElement = $this->document->createElement("input");
-				$csrfElement->setAttribute("name", static::TOKEN_NAME);
-				$csrfElement->setAttribute("value", $token);
-				$csrfElement->setAttribute("type", "hidden");
-				$form->insertBefore($csrfElement, $form->firstChild);
+				$csrfElement = $this->document->createElement(
+					"input"
+				);
+				$csrfElement->setAttribute(
+					"name",
+					static::TOKEN_NAME
+				);
+				$csrfElement->setAttribute(
+					"value",
+					$token
+				);
+				$csrfElement->setAttribute(
+					"type",
+					"hidden"
+				);
+				$form->insertBefore(
+					$csrfElement,
+					$form->firstChild
+				);
 
 				if($tokenSharing === self::ONE_TOKEN_PER_FORM) {
 					$token = $this->tokenStore->generateNewToken();
@@ -78,12 +92,23 @@ class HTMLDocumentProtector {
 
 		if(is_null($meta)) {
 			$meta = $this->document->createElement("meta");
-			$meta->setAttribute("name", self::TOKEN_NAME);
+			$meta->setAttribute(
+				"name",
+				self::TOKEN_NAME
+			);
 
-			$head = $this->document->querySelector("head");
+			$head = $this->document->querySelector(
+				"head"
+			);
+
 			if(is_null($head)) {
-				$head = $this->document->createElement("head");
-				$htmlElement = $this->document->querySelector("html");
+				$head = $this->document->createElement(
+					"head"
+				);
+				$htmlElement = $this->document->querySelector(
+					"html"
+				);
+
 				$htmlElement->appendChild($head);
 			}
 
