@@ -3,6 +3,7 @@ namespace Gt\Csrf;
 
 use Gt\Csrf\Exception\CsrfException;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class TokenStoreTest extends TestCase {
 	const ONE_FORM
@@ -84,6 +85,34 @@ HTML;
 		$post["doink"] = "binky";
 		// add the token as if it were from a previous page
 		$post[HTMLDocumentProtector::$TOKEN_NAME] = $token;
+
+		$exception = null;
+
+		try {
+			$tokenStore->processAndVerify($post);
+		}
+		catch(CsrfException $exception) {}
+
+		self::assertNull($exception);
+	}
+
+	public function testValidTokenObj() {
+		$tokenStore = new ArrayTokenStore();
+		$token = $tokenStore->generateNewToken();
+		$tokenStore->saveToken($token);
+
+		$post = new StdClass();
+		$post->toArray = function() use($post) {
+			$array = [];
+
+			foreach($post as $key => $value) {
+				$array[$key] = $value;
+			}
+
+			return $array;
+		};
+		$post->doink = "binky";
+		$post->{HTMLDocumentProtector::$TOKEN_NAME} = $token;
 
 		$exception = null;
 
