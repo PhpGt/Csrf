@@ -36,7 +36,8 @@ abstract class TokenStore {
 		$oldReportingLevel = error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 		$factory = new RandomLibFactory();
 		$this->tokenGenerator = $factory->getGenerator(
-			new Strength($this->strength));
+			new Strength($this->strength)
+		);
 // Set error_reporting back to what it was previously.
 		error_reporting($oldReportingLevel);
 	}
@@ -65,7 +66,7 @@ abstract class TokenStore {
 
 	/**
 	 * If a $_POST global exists, check that it contains a token and that the token is valid.
-	 * The name the token is stored-under is contained in HTMLDocumentProtector::$TOKEN_NAME.
+	 * The name the token is stored-under is contained in HTMLDocumentProtector::TOKEN_NAME.
 	 *
 	 * @throws CsrfTokenMissingException There's a $_POST request present but no
 	 * token present
@@ -83,12 +84,12 @@ abstract class TokenStore {
 		}
 
 		if(!empty($postData)) {
-			if(!isset($postData[HTMLDocumentProtector::$TOKEN_NAME])) {
+			if(!isset($postData[HTMLDocumentProtector::TOKEN_NAME])) {
 				throw new CsrfTokenMissingException();
 			}
 
-			$this->verifyToken($postData[HTMLDocumentProtector::$TOKEN_NAME]);
-			$this->consumeToken($postData[HTMLDocumentProtector::$TOKEN_NAME]);
+			$this->verifyToken($postData[HTMLDocumentProtector::TOKEN_NAME]);
+			$this->consumeToken($postData[HTMLDocumentProtector::TOKEN_NAME]);
 		}
 	}
 

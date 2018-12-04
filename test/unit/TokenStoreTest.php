@@ -51,7 +51,7 @@ HTML;
 	public function testInvalidToken() {
 		$post = [];
 		$post["doink"] = "binky";
-		$post[HTMLDocumentProtector::$TOKEN_NAME] = "12321";
+		$post[HTMLDocumentProtector::TOKEN_NAME] = "12321";
 		$sut = new ArrayTokenStore();
 		$this->expectException(
 			"\\Gt\\Csrf\\exception\\CSRFTokenInvalidException");
@@ -68,7 +68,7 @@ HTML;
 		$post = [];
 		$post["doink"] = "binky";
 		// add the token as if it were from a previous page
-		$post[HTMLDocumentProtector::$TOKEN_NAME] = $token;
+		$post[HTMLDocumentProtector::TOKEN_NAME] = $token;
 
 		$this->expectException(
 			"\\Gt\\Csrf\\exception\\CSRFTokenSpentException");
@@ -84,7 +84,7 @@ HTML;
 		$post = [];
 		$post["doink"] = "binky";
 		// add the token as if it were from a previous page
-		$post[HTMLDocumentProtector::$TOKEN_NAME] = $token;
+		$post[HTMLDocumentProtector::TOKEN_NAME] = $token;
 
 		$exception = null;
 
@@ -112,7 +112,7 @@ HTML;
 			return $array;
 		};
 		$post->doink = "binky";
-		$post->{HTMLDocumentProtector::$TOKEN_NAME} = $token;
+		$post->{HTMLDocumentProtector::TOKEN_NAME} = $token;
 
 		$exception = null;
 

@@ -11,7 +11,10 @@ class SessionTokenStore extends TokenStore {
 	/** @var SessionStore */
 	protected $session;
 
-	public function __construct(SessionStore $session, int $maxTokens = null) {
+	public function __construct(
+		SessionStore $session,
+		int $maxTokens = null
+	) {
 		$this->session = $session;
 		parent::__construct($maxTokens);
 	}

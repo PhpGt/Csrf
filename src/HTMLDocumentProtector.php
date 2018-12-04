@@ -14,11 +14,15 @@ class HTMLDocumentProtector {
 	 * @var string The name to be used for the head meta tag and hidden html input fields used
 	 * to store the token in the page
 	 */
-	public static $TOKEN_NAME = "csrf-token";
+	const TOKEN_NAME = "csrf-token";
+
 	private $document;
 	private $tokenStore;
 
-	public function __construct(HTMLDocument $document, TokenStore $tokenStore) {
+	public function __construct(
+		HTMLDocument $document,
+		TokenStore $tokenStore
+	) {
 		$this->document = $document;
 		$this->tokenStore = $tokenStore;
 	}
@@ -41,7 +45,9 @@ class HTMLDocumentProtector {
 	 * generating unique tokens. In most cases this default is suitable - wherever the normal
 	 * model of returning a new page in response to a form submit is used.
 	 */
-	public function protectAndInject(string $tokenSharing = self::ONE_TOKEN_PER_PAGE):void {
+	public function protectAndInject(
+		string $tokenSharing = self::ONE_TOKEN_PER_PAGE
+	):void {
 		$forms = $this->document->forms;
 
 		if($forms->length > 0) {
@@ -50,7 +56,7 @@ class HTMLDocumentProtector {
 
 			foreach($forms as $form) {
 				$csrfElement = $this->document->createElement("input");
-				$csrfElement->setAttribute("name", static::$TOKEN_NAME);
+				$csrfElement->setAttribute("name", static::TOKEN_NAME);
 				$csrfElement->setAttribute("value", $token);
 				$csrfElement->setAttribute("type", "hidden");
 				$form->insertBefore($csrfElement, $form->firstChild);
@@ -67,12 +73,12 @@ class HTMLDocumentProtector {
 		}
 
 		$meta = $this->document->querySelector(
-			"head meta[name='" . self::$TOKEN_NAME . "']"
+			"head meta[name='" . self::TOKEN_NAME . "']"
 		);
 
 		if(is_null($meta)) {
 			$meta = $this->document->createElement("meta");
-			$meta->setAttribute("name", self::$TOKEN_NAME);
+			$meta->setAttribute("name", self::TOKEN_NAME);
 
 			$head = $this->document->querySelector("head");
 			if(is_null($head)) {
