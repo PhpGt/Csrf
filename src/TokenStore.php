@@ -33,7 +33,10 @@ abstract class TokenStore {
 		}
 
 // TODO: Remove error_reporting when issue #45 is addressed.
-		$oldReportingLevel = error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+		$oldReportingLevel = error_reporting(
+			E_ALL & ~E_NOTICE & ~E_DEPRECATED
+		);
+
 		$factory = new RandomLibFactory();
 		$this->tokenGenerator = $factory->getGenerator(
 			new Strength($this->strength)
@@ -61,7 +64,9 @@ abstract class TokenStore {
 	 * @see TokenStore::saveToken() for storing a generated token.
 	 */
 	public function generateNewToken():string {
-		return $this->tokenGenerator->generateString($this->tokenLength);
+		return $this->tokenGenerator->generateString(
+			$this->tokenLength
+		);
 	}
 
 	/**
