@@ -164,4 +164,40 @@ class SessionTokenStoreTest extends TestCase {
 
 		self::assertNull($exception);
 	}
+
+	public function testConsumeToken() {
+		$existingTokens = [];
+		for($i = 0; $i < 10; $i++) {
+			$key = uniqid("token-");
+			$value = rand(0, 1) ? null : time();
+			$existingTokens[$key] = $value;
+		}
+
+		$tokenToConsume = array_rand($existingTokens);
+
+		$existingTokensConsumed = [];
+		foreach($existingTokens as $key => $value) {
+			if($key === $tokenToConsume) {
+				$value = time();
+			}
+
+			$existingTokensConsumed[$key] = $value;
+		}
+
+		$session = self::createMock(SessionStore::class);
+		$session->method("get")
+			->willReturn($existingTokens);
+
+		$session->expects($this->once())
+			->method("set")
+			->with(
+				SessionTokenStore::SESSION_KEY,
+				$existingTokensConsumed
+			);
+
+		/** @var SessionStore $session */
+
+		$sessionTokenStore = new SessionTokenStore($session);
+		$sessionTokenStore->consumeToken($tokenToConsume);
+	}
 }
