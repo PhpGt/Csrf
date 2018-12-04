@@ -133,4 +133,35 @@ class SessionTokenStoreTest extends TestCase {
 		$sessionTokenStore = new SessionTokenStore($session);
 		$sessionTokenStore->verifyToken($tokenToCheckFor);
 	}
+
+	public function testVerify() {
+		$tokenToCheckFor = uniqid("token-");
+		$existingTokens = [];
+		for($i = 0; $i < 9; $i++) {
+			$key = uniqid("token-");
+			$value = rand(0, 1) ? null : time();
+			$existingTokens[$key] = $value;
+		}
+
+		$existingTokens = array_merge(
+			array_slice($existingTokens, 0, 4),
+			[$tokenToCheckFor => null],
+			array_slice($existingTokens, 4)
+		);
+
+		$session = self::createMock(SessionStore::class);
+		$session->method("get")
+			->willReturn($existingTokens);
+
+		$exception = null;
+		/** @var SessionStore $sesssion*/
+		$sesssionTokenStore = new SessionTokenStore($session);
+
+		try {
+			$sesssionTokenStore->verifyToken($tokenToCheckFor);
+		}
+		catch(\Exception $exception) {}
+
+		self::assertNull($exception);
+	}
 }

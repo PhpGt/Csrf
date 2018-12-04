@@ -119,6 +119,14 @@ HTML;
 
 		// now make sure the shorter token is successfully stored
 		$sut->saveToken($token);
-		$this->assertTrue($sut->verifyToken($token));
+
+		$exception = null;
+
+		try {
+			$sut->verifyToken($token);
+		}
+		catch(\Exception $exception) {}
+
+		self::assertNull($exception);
 	}
 }

@@ -112,5 +112,5 @@ abstract class TokenStore {
 	 * pressed submit twice in quick succession - instructing them
 	 * to refresh the page and resubmit their form for example.
 	 */
-	abstract public function verifyToken(string $token):bool;
+	abstract public function verifyToken(string $token):void;
 }

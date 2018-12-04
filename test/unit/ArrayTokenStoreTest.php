@@ -10,7 +10,14 @@ class ArrayTokenStoreTest extends TestCase {
 		$token = $sut->generateNewToken();
 		$sut->saveToken($token);
 		// check it exists
-		$this->assertTrue($sut->verifyToken($token));
+		$exception = null;
+
+		try {
+			$sut->verifyToken($token);
+		}
+		catch(\Exception $exception) {}
+
+		self::assertNull($exception);
 	}
 
 	// token doesn't exist

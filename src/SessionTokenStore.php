@@ -27,7 +27,7 @@ class SessionTokenStore extends TokenStore {
 		$this->session->set(self::SESSION_KEY, $tokenList);
 	}
 
-	public function verifyToken(string $token):bool {
+	public function verifyToken(string $token):void {
 		$tokenList = $this->session->get(self::SESSION_KEY) ?? [];
 
 		if(!array_key_exists($token, $tokenList)) {
@@ -41,8 +41,6 @@ class SessionTokenStore extends TokenStore {
 				$tokenList[$token]
 			);
 		}
-
-		return true;
 	}
 
 	public function consumeToken(string $token):void {

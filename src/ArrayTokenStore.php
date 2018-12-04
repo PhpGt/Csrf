@@ -22,7 +22,7 @@ class ArrayTokenStore extends TokenStore {
 		}
 	}
 
-	public function verifyToken(string $token):bool {
+	public function verifyToken(string $token):void {
 		if(!array_key_exists($token, $this->arrayStore)) {
 			throw new CsrfTokenInvalidException(
 				$token
@@ -33,9 +33,6 @@ class ArrayTokenStore extends TokenStore {
 				$token,
 				$this->arrayStore[$token]
 			);
-		}
-		else {
-			return true;
 		}
 	}
 
