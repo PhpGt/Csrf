@@ -66,8 +66,6 @@ class SessionTokenStoreTest extends TestCase {
 		$session = self::createMock(SessionStore::class);
 		$session->method("get")
 			->willReturn($existingTokens);
-		$session->method("getMaxTokens")
-			->willReturn(10);
 
 		$existingTokensWithNewToken = [];
 		foreach($existingTokens as $key => $value) {
@@ -76,8 +74,18 @@ class SessionTokenStoreTest extends TestCase {
 		array_shift($existingTokensWithNewToken);
 		$existingTokensWithNewToken[$tokenToSet] = null;
 
+		$session->expects($this->once())
+			->method("set")
+			->with(
+				SessionTokenStore::SESSION_KEY,
+				$existingTokensWithNewToken
+			);
+
 		/** @var SessionStore $session */
-		$sessionTokenStore = new SessionTokenStore($session);
+		$sessionTokenStore = new SessionTokenStore(
+			$session,
+			10
+		);
 		$sessionTokenStore->saveToken($tokenToSet);
 	}
 }
