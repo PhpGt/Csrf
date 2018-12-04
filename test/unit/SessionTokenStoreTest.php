@@ -1,6 +1,7 @@
 <?php
 namespace Gt\Csrf\Test;
 
+use Gt\Csrf\Exception\CsrfTokenInvalidException;
 use Gt\Csrf\SessionTokenStore;
 use Gt\Session\SessionStore;
 use PHPUnit\Framework\TestCase;
@@ -87,5 +88,23 @@ class SessionTokenStoreTest extends TestCase {
 			10
 		);
 		$sessionTokenStore->saveToken($tokenToSet);
+	}
+
+	public function testVerifyTokenNotExists() {
+		$tokenToCheckFor = uniqid("token-");
+		$existingTokens = [];
+		for($i = 0; $i < 10; $i++) {
+			$key = uniqid("token-");
+			$existingTokens[$key] = null;
+		}
+
+		$session = self::createMock(SessionStore::class);
+		$session->method("get")
+			->willReturn($existingTokens);
+
+		self::expectException(CsrfTokenInvalidException::class);
+		/** @var SessionStore $session*/
+		$sessionTokenStore = new SessionTokenStore($session);
+		$sessionTokenStore->verifyToken($tokenToCheckFor);
 	}
 }
