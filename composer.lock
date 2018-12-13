@@ -190,12 +190,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PhpGt/Session.git",
-                "reference": "db9fa96c9813663c0c1c6659ff60d48a80945d13"
+                "reference": "c088e63c7aaecd1036ea57d3c608d30a54f41ff3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PhpGt/Session/zipball/db9fa96c9813663c0c1c6659ff60d48a80945d13",
-                "reference": "db9fa96c9813663c0c1c6659ff60d48a80945d13",
+                "url": "https://api.github.com/repos/PhpGt/Session/zipball/c088e63c7aaecd1036ea57d3c608d30a54f41ff3",
+                "reference": "c088e63c7aaecd1036ea57d3c608d30a54f41ff3",
                 "shasum": ""
             },
             "require": {
@@ -215,7 +215,7 @@
                 "MIT"
             ],
             "description": "Encapsulated user sessions.",
-            "time": "2018-12-03T09:06:33+00:00"
+            "time": "2018-12-10T08:34:34+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -946,16 +946,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.5.0",
+            "version": "7.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "520723129e2b3fc1dc4c0953e43c9d40e1ecb352"
+                "reference": "c23d78776ad415d5506e0679723cb461d71f488f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/520723129e2b3fc1dc4c0953e43c9d40e1ecb352",
-                "reference": "520723129e2b3fc1dc4c0953e43c9d40e1ecb352",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c23d78776ad415d5506e0679723cb461d71f488f",
+                "reference": "c23d78776ad415d5506e0679723cb461d71f488f",
                 "shasum": ""
             },
             "require": {
@@ -1026,7 +1026,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-12-07T07:08:12+00:00"
+            "time": "2018-12-12T07:20:32+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
