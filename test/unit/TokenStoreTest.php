@@ -101,18 +101,17 @@ HTML;
 		$token = $tokenStore->generateNewToken();
 		$tokenStore->saveToken($token);
 
-		$post = new StdClass();
-		$post->toArray = function() use($post) {
-			$array = [];
+		$arrayData = [
+			HTMLDocumentProtector::TOKEN_NAME => $token,
+			"example" => uniqid(),
+			"test" => "testValidTokenObj",
+		];
 
-			foreach($post as $key => $value) {
-				$array[$key] = $value;
-			}
-
-			return $array;
-		};
-		$post->doink = "binky";
-		$post->{HTMLDocumentProtector::TOKEN_NAME} = $token;
+		$mockBuilder = self::getMockBuilder(StdClass::class);
+		$mockBuilder->setMethods(["toArray"]);
+		$post = $mockBuilder->getMock();
+		$post->method("toArray")
+			->willReturn($arrayData);
 
 		$exception = null;
 
