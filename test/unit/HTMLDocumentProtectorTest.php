@@ -31,10 +31,11 @@ HTML;
 <body>
 	<h1>This HTML is for the unit test.</h1>
 	<p>Hello</p>
-    <form method="POST">
-        <input type="text">
-        <button type="submit"></button>
-    </form>
+	
+	<form method="POST">
+		<input type="text">
+		<button type="submit"></button>
+	</form>
 </body>
 </html>
 HTML;
@@ -50,17 +51,16 @@ HTML;
 <body>
 	<h1>This HTML is for the unit test.</h1>
 	<p>Hello</p>
-    <form method="POST">
-        <input type="text">
-        <button type="submit"></button>
-    </form>
-    <form method="GET">
-        <input type="text" value="A text field">
-        <button type="submit"></button>
-    </form>
-    <!-- an empty form too...-->
-    <form method="POST">
-    </form>
+	<form method="POST">
+		<input type="text">
+		<button type="submit"></button>
+	</form>
+	<form method="GET">
+		<input type="text" value="A text field">
+		<button type="submit"></button>
+	</form>
+	<!-- an empty form too...-->
+	<form method="POST"></form>
 </body>
 </html>
 HTML;
@@ -77,9 +77,9 @@ HTML;
 <body>
 	<h1>This HTML is for the unit test.</h1>
 	<p>Hello</p>
-    <!-- an empty form too...-->
-    <form method="POST">
-    </form>
+	<!-- an empty form too...-->
+	<form method="POST">
+	</form>
 </body>
 </html>
 HTML;
@@ -153,12 +153,17 @@ HTML;
 
 		// check that the token has been injected in all forms
 		$doc = $sut->getHTMLDocument();
-		$this->assertEquals(
-			3, $doc->querySelectorAll(
-			"input[name='" . HTMLDocumentProtector::TOKEN_NAME . "']")->length);
-		$this->assertEquals(
-			1, $doc->querySelectorAll(
-			"head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']")->length);
+		$this->assertCount(
+			2,
+			$doc->querySelectorAll(
+				"input[name='" . HTMLDocumentProtector::TOKEN_NAME . "']"
+			)
+		);
+		$this->assertCount(
+			1,
+			$doc->querySelectorAll(
+				"head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']")
+		);
 	}
 
 	public function testSingleCodeSharedAcrossForms() {
