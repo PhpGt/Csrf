@@ -55,6 +55,11 @@ class HTMLDocumentProtector {
 			$this->tokenStore->saveToken($token);
 
 			foreach($forms as $form) {
+				$formMethod = $form->getAttribute("method");
+				if(strtolower($formMethod) !== "post") {
+					continue;
+				}
+
 				$csrfElement = $this->document->createElement(
 					"input"
 				);
