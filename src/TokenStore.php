@@ -84,8 +84,8 @@ abstract class TokenStore {
 	public function processAndVerify($postData):void {
 // Expect the token to be present on ALL post requests.
 		if(!is_array($postData)
-		&& is_callable([$postData, "toArray"])) {
-			$postData = call_user_func([$postData, "toArray"]);
+		&& is_callable([$postData, "asArray"])) {
+			$postData = call_user_func([$postData, "asArray"]);
 		}
 
 		if(!empty($postData)) {
