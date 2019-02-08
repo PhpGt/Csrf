@@ -190,19 +190,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PhpGt/Session.git",
-                "reference": "19edda6b17a409de4f93959de9710c7c4f15e6c9"
+                "reference": "3d57fa4fda3840f2a5d93c9fbdb4e8cc5ba21920"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PhpGt/Session/zipball/19edda6b17a409de4f93959de9710c7c4f15e6c9",
-                "reference": "19edda6b17a409de4f93959de9710c7c4f15e6c9",
+                "url": "https://api.github.com/repos/PhpGt/Session/zipball/3d57fa4fda3840f2a5d93c9fbdb4e8cc5ba21920",
+                "reference": "3d57fa4fda3840f2a5d93c9fbdb4e8cc5ba21920",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.3"
+                "phpunit/phpunit": "^8.0"
             },
             "type": "library",
             "autoload": {
@@ -215,7 +215,7 @@
                 "MIT"
             ],
             "description": "Encapsulated user sessions.",
-            "time": "2019-01-16T11:01:43+00:00"
+            "time": "2019-02-04T08:52:17+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -946,16 +946,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.0.1",
+            "version": "8.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "753a192050133fc649234de34d1993d87785b134"
+                "reference": "d64e502503bcfab5d46c0b74ffd41f4986831dc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/753a192050133fc649234de34d1993d87785b134",
-                "reference": "753a192050133fc649234de34d1993d87785b134",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d64e502503bcfab5d46c0b74ffd41f4986831dc7",
+                "reference": "d64e502503bcfab5d46c0b74ffd41f4986831dc7",
                 "shasum": ""
             },
             "require": {
@@ -1024,7 +1024,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-02-03T17:34:56+00:00"
+            "time": "2019-02-07T14:17:09+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -1141,12 +1141,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/diff.git",
-                "reference": "720fcc7e9b5cf384ea68d9d930d480907a0c1a29"
+                "reference": "5e8092bab66f0e32d52b708750bda1c7d55e9198"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/720fcc7e9b5cf384ea68d9d930d480907a0c1a29",
-                "reference": "720fcc7e9b5cf384ea68d9d930d480907a0c1a29",
+                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/5e8092bab66f0e32d52b708750bda1c7d55e9198",
+                "reference": "5e8092bab66f0e32d52b708750bda1c7d55e9198",
                 "shasum": ""
             },
             "require": {
@@ -1189,7 +1189,7 @@
                 "unidiff",
                 "unified diff"
             ],
-            "time": "2019-02-04T06:01:07+00:00"
+            "time": "2019-02-04T09:27:48+00:00"
         },
         {
             "name": "sebastian/environment",
@@ -1597,16 +1597,16 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.10.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "e3d826245268269cd66f8326bd8bc066687b4a19"
+                "reference": "82ebae02209c21113908c229e9883c419720738a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/e3d826245268269cd66f8326bd8bc066687b4a19",
-                "reference": "e3d826245268269cd66f8326bd8bc066687b4a19",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/82ebae02209c21113908c229e9883c419720738a",
+                "reference": "82ebae02209c21113908c229e9883c419720738a",
                 "shasum": ""
             },
             "require": {
@@ -1618,7 +1618,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.9-dev"
+                    "dev-master": "1.11-dev"
                 }
             },
             "autoload": {
@@ -1640,7 +1640,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "email": "BackEndTea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -1651,7 +1651,7 @@
                 "polyfill",
                 "portable"
             ],
-            "time": "2018-08-06T14:22:27+00:00"
+            "time": "2019-02-06T07:57:58+00:00"
         },
         {
             "name": "theseer/tokenizer",
