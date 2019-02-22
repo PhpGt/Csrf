@@ -3,16 +3,15 @@
 	"description": "Automatic protection from Cross-Site Request Forgery.",
 	"type": "library",
 	"license": "MIT",
-	"minimum-stability": "dev",
 
 	"require": {
-		"php": ">=7.1",
-		"phpgt/dom": ">1.0",
-		"phpgt/session": "dev-master",
+		"php": ">=7.2",
+		"phpgt/dom": ">=1.0",
+		"phpgt/session": "dev-master@dev",
 		"ircmaxell/random-lib": "^1.2"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^6.4|^7.0"
+		"phpunit/phpunit": "8.*"
 	},
 
 	"autoload": {
