@@ -2,6 +2,9 @@
 namespace Gt\Csrf;
 
 use Gt\Csrf\Exception\CsrfException;
+use Gt\Csrf\Exception\CsrfTokenInvalidException;
+use Gt\Csrf\Exception\CsrfTokenMissingException;
+use Gt\Csrf\Exception\CsrfTokenSpentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -42,8 +45,7 @@ HTML;
 		$post = [];
 		$post["doink"] = "binky";
 		$sut = new ArrayTokenStore();
-		$this->expectException(
-			"\\Gt\\Csrf\\exception\\CSRFTokenMissingException");
+		$this->expectException(CSRFTokenMissingException::class);
 		$sut->processAndVerify($post);
 	}
 
@@ -53,8 +55,7 @@ HTML;
 		$post["doink"] = "binky";
 		$post[HTMLDocumentProtector::TOKEN_NAME] = "12321";
 		$sut = new ArrayTokenStore();
-		$this->expectException(
-			"\\Gt\\Csrf\\exception\\CSRFTokenInvalidException");
+		$this->expectException(CSRFTokenInvalidException::class);
 		$sut->processAndVerify($post);
 	}
 
@@ -70,8 +71,7 @@ HTML;
 		// add the token as if it were from a previous page
 		$post[HTMLDocumentProtector::TOKEN_NAME] = $token;
 
-		$this->expectException(
-			"\\Gt\\Csrf\\exception\\CSRFTokenSpentException");
+		$this->expectException(CSRFTokenSpentException::class);
 		$tokenStore->processAndVerify($post);
 	}
 
