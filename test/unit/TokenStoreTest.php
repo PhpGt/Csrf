@@ -108,9 +108,9 @@ HTML;
 		];
 
 		$mockBuilder = self::getMockBuilder(StdClass::class);
-		$mockBuilder->setMethods(["toArray"]);
+		$mockBuilder->setMethods(["asArray"]);
 		$post = $mockBuilder->getMock();
-		$post->method("toArray")
+		$post->method("asArray")
 			->willReturn($arrayData);
 
 		$exception = null;
