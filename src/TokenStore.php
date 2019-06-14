@@ -4,8 +4,6 @@ namespace Gt\Csrf;
 use Gt\Csrf\Exception\CsrfTokenInvalidException;
 use Gt\Csrf\Exception\CsrfTokenMissingException;
 use Gt\Csrf\Exception\CsrfTokenSpentException;
-use RandomLib\Factory as RandomLibFactory;
-use SecurityLib\Strength;
 
 /**
  * Extend this base class to create a store for CSRF tokens. The core functionality of generating
@@ -16,7 +14,6 @@ abstract class TokenStore {
 	 * @var int|null The maximum number of tokens to be retained.
 	 */
 	protected $maxTokens = 1000;
-	protected $strength = Strength::MEDIUM;
 	protected $tokenLength = 32;
 	protected $tokenGenerator;
 
@@ -31,18 +28,6 @@ abstract class TokenStore {
 		if(!is_null($maxTokens)) {
 			$this->maxTokens = $maxTokens;
 		}
-
-// TODO: Remove error_reporting when issue #45 is addressed.
-		$oldReportingLevel = error_reporting(
-			E_ALL & ~E_NOTICE & ~E_DEPRECATED
-		);
-
-		$factory = new RandomLibFactory();
-		$this->tokenGenerator = $factory->getGenerator(
-			new Strength($this->strength)
-		);
-// Set error_reporting back to what it was previously.
-		error_reporting($oldReportingLevel);
 	}
 
 	public function getMaxTokens():int {
@@ -60,13 +45,12 @@ abstract class TokenStore {
 
 	/**
 	 * Generate a new token. NOTE: This method does NOT store the token.
-	 *
-	 * @see TokenStore::saveToken() for storing a generated token.
 	 */
 	public function generateNewToken():string {
-		return $this->tokenGenerator->generateString(
-			$this->tokenLength
-		);
+// This function uses PHP 7.2's inbuilt random_bytes function, which generates
+// raw bytes. When converted to hex, each byte is represented by two
+// characters, hence why we divide the token length by two.
+		return bin2hex(random_bytes($this->tokenLength / 2));
 	}
 
 	/**
