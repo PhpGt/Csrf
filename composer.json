@@ -6,9 +6,8 @@
 
 	"require": {
 		"php": ">=7.2",
-		"phpgt/dom": ">=1.0",
-		"phpgt/session": "dev-master@dev",
-		"ircmaxell/random-lib": "^1.2"
+		"phpgt/dom": "*",
+		"phpgt/session": "*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "8.*"
