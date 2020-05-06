@@ -47,7 +47,7 @@ class HTMLDocumentProtector {
 	 */
 	public function protectAndInject(
 		string $tokenSharing = self::ONE_TOKEN_PER_PAGE
-	):void {
+	):string {
 		$forms = $this->document->forms;
 
 		if($forms->length > 0) {
@@ -121,6 +121,8 @@ class HTMLDocumentProtector {
 		}
 
 		$meta->setAttribute("content", $token);
+
+		return $token;
 	}
 
 	/**
