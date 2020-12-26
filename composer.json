@@ -6,11 +6,12 @@
 
 	"require": {
 		"php": ">=7.2",
-		"phpgt/dom": "*",
-		"phpgt/session": "*"
+		"phpgt/dom": "2.*",
+		"phpgt/session": "1.*"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "8.*"
+		"phpunit/phpunit": "9.*",
+		"phpstan/phpstan": ">=0.12.64"
 	},
 
 	"autoload": {
@@ -20,7 +21,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Gt\\Csrf\\Test\\": "./test/unit"
+			"Gt\\Csrf\\Test\\": "./test/phpunit"
 		}
 	},
 
