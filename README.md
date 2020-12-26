@@ -5,7 +5,7 @@ This library handles [CSRF protection](https://www.owasp.org/index.php/Cross-Sit
 
 ***
 
-<a href="https://circleci.com/gh/PhpGt/Csrf" target="_blank">
+<a href="https://github.com/PhpGt/Csrf/actions" target="_blank">
     <img src="https://badge.status.php.gt/csrf-build.svg" alt="Build status" />
 </a>
 <a href="https://scrutinizer-ci.com/g/PhpGt/Csrf" target="_blank">
