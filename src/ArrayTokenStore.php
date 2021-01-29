@@ -9,7 +9,8 @@ use Gt\Csrf\Exception\CsrfTokenSpentException;
  * session - it has no other way of remembering the tokens!
  */
 class ArrayTokenStore extends TokenStore {
-	private $arrayStore = [];
+	/** @var array<string, ?int> */
+	private array $arrayStore = [];
 
 	public function __construct(int $maxTokens = null) {
 		parent::__construct($maxTokens);
