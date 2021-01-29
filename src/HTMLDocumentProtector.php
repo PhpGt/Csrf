@@ -16,8 +16,8 @@ class HTMLDocumentProtector {
 	 */
 	const TOKEN_NAME = "csrf-token";
 
-	private $document;
-	private $tokenStore;
+	private HTMLDocument $document;
+	private TokenStore $tokenStore;
 
 	public function __construct(
 		HTMLDocument $document,

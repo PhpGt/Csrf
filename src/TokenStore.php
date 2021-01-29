@@ -10,12 +10,8 @@ use Gt\Csrf\Exception\CsrfTokenSpentException;
  * the tokens is provided by the base class, but can be overridden.
  */
 abstract class TokenStore {
-	/**
-	 * @var int|null The maximum number of tokens to be retained.
-	 */
-	protected $maxTokens = 1000;
-	protected $tokenLength = 32;
-	protected $tokenGenerator;
+	protected ?int $maxTokens = 1000;
+	protected int $tokenLength = 32;
 
 	/**
 	 * An optional limit of the number of valid tokens the TokenStore will retain may be passed.
@@ -57,6 +53,7 @@ abstract class TokenStore {
 	 * If a $_POST global exists, check that it contains a token and that the token is valid.
 	 * The name the token is stored-under is contained in HTMLDocumentProtector::TOKEN_NAME.
 	 *
+	 * @param array<string, int>|callable $postData
 	 * @throws CsrfTokenMissingException There's a $_POST request present but no
 	 * token present
 	 * @throws CsrfTokenInvalidException There's a token included on the $_POST,
