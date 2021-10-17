@@ -131,7 +131,7 @@ HTML;
 		// check that the token has been injected
 		$doc = $sut->getHTMLDocument();
 		$this->assertTrue(
-			strpos($doc->saveHTML(), HTMLDocumentProtector::TOKEN_NAME) >= 0);
+			strpos((string)$doc, HTMLDocumentProtector::TOKEN_NAME) >= 0);
 		$this->assertNotNull(
 			$doc->querySelector(
 				"input[name='" . HTMLDocumentProtector::TOKEN_NAME . "']"));
