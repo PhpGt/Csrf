@@ -6,7 +6,7 @@
 
 	"require": {
 		"php": ">=7.4",
-		"phpgt/dom": "2.*",
+		"phpgt/dom": "^3.0.0",
 		"phpgt/session": "1.*"
 	},
 	"require-dev": {
@@ -37,7 +37,7 @@
 			"role": "Developer"
 		}
 	],
-	
+
 	"funding": [
 		{
 			"type": "github",
