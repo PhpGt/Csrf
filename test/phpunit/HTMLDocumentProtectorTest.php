@@ -1,6 +1,8 @@
 <?php
-namespace Gt\Csrf;
+namespace Gt\Csrf\Test;
 
+use Gt\Csrf\ArrayTokenStore;
+use Gt\Csrf\HTMLDocumentProtector;
 use Gt\Dom\HTMLDocument;
 use PHPUnit\Framework\TestCase;
 
