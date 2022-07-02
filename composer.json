@@ -5,8 +5,8 @@
 	"license": "MIT",
 
 	"require": {
-		"php": ">=7.4",
-		"phpgt/dom": "^3.0.0",
+		"php": ">=8.1",
+		"phpgt/dom": "^4.0.0",
 		"phpgt/session": "1.*"
 	},
 	"require-dev": {

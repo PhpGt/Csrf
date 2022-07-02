@@ -1,10 +1,12 @@
 <?php
-namespace Gt\Csrf;
+namespace Gt\Csrf\Test;
 
+use Gt\Csrf\ArrayTokenStore;
 use Gt\Csrf\Exception\CsrfException;
 use Gt\Csrf\Exception\CsrfTokenInvalidException;
 use Gt\Csrf\Exception\CsrfTokenMissingException;
 use Gt\Csrf\Exception\CsrfTokenSpentException;
+use Gt\Csrf\HTMLDocumentProtector;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 

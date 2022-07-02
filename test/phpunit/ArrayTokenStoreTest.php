@@ -1,7 +1,8 @@
 <?php
-namespace Gt\Csrf;
+namespace Gt\Csrf\Test;
 
 use Exception;
+use Gt\Csrf\ArrayTokenStore;
 use Gt\Csrf\Exception\CsrfTokenInvalidException;
 use Gt\Csrf\Exception\CsrfTokenSpentException;
 use PHPUnit\Framework\TestCase;
