@@ -10,7 +10,7 @@
 		"phpgt/session": "1.*"
 	},
 	"require-dev": {
-		"phpstan/phpstan": "v1.8.1",
+		"phpstan/phpstan": "v1.8.3",
 		"phpunit/phpunit": "v9.5.21"
 	},
 
