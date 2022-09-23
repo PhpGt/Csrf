@@ -82,8 +82,8 @@ $protector->protect();
 echo $protector->getHTMLDocument();
 ```
 
-Using tokens of a fifferent length
-----------------------------------
+Using tokens of a different lengths
+-----------------------------------
 
 By default, 32 character tokens are generated. They use characters from the set [a-zA-Z0-9], meaning a 64-bit token which would take a brute-force attacker making 100,000 requests per second around 2.93 million years to guess. If this seems either excessive or inadequate you can change the token length using `TokenStore::setTokenLength()`.
 
