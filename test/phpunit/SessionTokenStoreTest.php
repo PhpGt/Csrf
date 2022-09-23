@@ -1,6 +1,7 @@
 <?php
 namespace Gt\Csrf\Test;
 
+use Exception;
 use Gt\Csrf\Exception\CsrfTokenInvalidException;
 use Gt\Csrf\Exception\CsrfTokenSpentException;
 use Gt\Csrf\SessionTokenStore;
@@ -8,7 +9,7 @@ use Gt\Session\SessionStore;
 use PHPUnit\Framework\TestCase;
 
 class SessionTokenStoreTest extends TestCase {
-	public function testSaveTokenWhenEmpty() {
+	public function testSaveToken_whenEmpty():void {
 		$tokenToSet = uniqid();
 
 		$session = self::createMock(SessionStore::class);
@@ -22,12 +23,11 @@ class SessionTokenStoreTest extends TestCase {
 				[$tokenToSet => null]
 			);
 
-		/** @var SessionStore $session */
 		$sessionTokenStore = new SessionTokenStore($session);
 		$sessionTokenStore->saveToken($tokenToSet);
 	}
 
-	public function testSaveTokenWhenNotEmpty() {
+	public function testSaveToken_whenNotEmpty():void {
 		$tokenToSet = uniqid("new-", true);
 		$existingTokens = [];
 		for($i = 0; $i < 10; $i++) {
@@ -52,12 +52,11 @@ class SessionTokenStoreTest extends TestCase {
 				$existingTokensWithNewToken
 			);
 
-		/** @var SessionStore $session */
 		$sessionTokenStore = new SessionTokenStore($session);
 		$sessionTokenStore->saveToken($tokenToSet);
 	}
 
-	public function testSaveTokenPastMaxTokens() {
+	public function testSaveToken_pastMaxTokens():void {
 		$tokenToSet = uniqid("new-");
 		$existingTokens = [];
 		for($i = 0; $i < 10; $i++) {
@@ -83,7 +82,6 @@ class SessionTokenStoreTest extends TestCase {
 				$existingTokensWithNewToken
 			);
 
-		/** @var SessionStore $session */
 		$sessionTokenStore = new SessionTokenStore(
 			$session,
 			10
@@ -91,7 +89,7 @@ class SessionTokenStoreTest extends TestCase {
 		$sessionTokenStore->saveToken($tokenToSet);
 	}
 
-	public function testVerifyTokenNotExists() {
+	public function testVerifyToken_notExists():void {
 		$tokenToCheckFor = uniqid("token-");
 		$existingTokens = [];
 		for($i = 0; $i < 10; $i++) {
@@ -104,12 +102,11 @@ class SessionTokenStoreTest extends TestCase {
 			->willReturn($existingTokens);
 
 		self::expectException(CsrfTokenInvalidException::class);
-		/** @var SessionStore $session*/
 		$sessionTokenStore = new SessionTokenStore($session);
 		$sessionTokenStore->verifyToken($tokenToCheckFor);
 	}
 
-	public function testVerifyTokenSpent() {
+	public function testVerifyToken_spent():void {
 		$tokenToCheckFor = uniqid("token-");
 		$existingTokens = [];
 		for($i = 0; $i < 9; $i++) {
@@ -129,12 +126,11 @@ class SessionTokenStoreTest extends TestCase {
 			->willReturn($existingTokens);
 
 		self::expectException(CsrfTokenSpentException::class);
-		/** @var SessionStore $session */
 		$sessionTokenStore = new SessionTokenStore($session);
 		$sessionTokenStore->verifyToken($tokenToCheckFor);
 	}
 
-	public function testVerify() {
+	public function testVerify():void {
 		$tokenToCheckFor = uniqid("token-");
 		$existingTokens = [];
 		for($i = 0; $i < 9; $i++) {
@@ -154,18 +150,17 @@ class SessionTokenStoreTest extends TestCase {
 			->willReturn($existingTokens);
 
 		$exception = null;
-		/** @var SessionStore $session*/
-		$sesssionTokenStore = new SessionTokenStore($session);
+		$sessionTokenStore = new SessionTokenStore($session);
 
 		try {
-			$sesssionTokenStore->verifyToken($tokenToCheckFor);
+			$sessionTokenStore->verifyToken($tokenToCheckFor);
 		}
-		catch(\Exception $exception) {}
+		catch(Exception $exception) {}
 
 		self::assertNull($exception);
 	}
 
-	public function testConsumeToken() {
+	public function testConsumeToken():void {
 		$existingTokens = [];
 		for($i = 0; $i < 10; $i++) {
 			$key = uniqid("token-");
@@ -194,8 +189,6 @@ class SessionTokenStoreTest extends TestCase {
 				SessionTokenStore::SESSION_KEY,
 				$existingTokensConsumed
 			);
-
-		/** @var SessionStore $session */
 
 		$sessionTokenStore = new SessionTokenStore($session);
 		$sessionTokenStore->consumeToken($tokenToConsume);

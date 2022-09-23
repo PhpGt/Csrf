@@ -53,7 +53,7 @@ abstract class TokenStore {
 	 * If a $_POST global exists, check that it contains a token and that the token is valid.
 	 * The name the token is stored-under is contained in HTMLDocumentProtector::TOKEN_NAME.
 	 *
-	 * @param array<string, int>|callable $postData
+	 * @param array<string, int>|object $postData
 	 * @throws CsrfTokenMissingException There's a $_POST request present but no
 	 * token present
 	 * @throws CsrfTokenInvalidException There's a token included on the $_POST,
@@ -62,7 +62,7 @@ abstract class TokenStore {
 	 * $_POST but it has already been consumed by a previous request.
 	 * @see TokenStore::verifyToken().
 	 */
-	public function processAndVerify($postData):void {
+	public function processAndVerify(array|object $postData):void {
 // Expect the token to be present on ALL post requests.
 		if(!is_array($postData)
 		&& is_callable([$postData, "asArray"])) {

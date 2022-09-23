@@ -7,243 +7,272 @@ use Gt\Dom\HTMLDocument;
 use PHPUnit\Framework\TestCase;
 
 class HTMLDocumentProtectorTest extends TestCase {
-	const NO_FORMS
-		= <<<HTML
-<!doctype html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<title>Test HTML</title>
-</head>
-<body>
-	<h1>This HTML is for the unit test.</h1>
-	<p>There are a few elements in this document.</p>
-</body>
-</html>
-HTML;
+	const NO_FORMS = <<<HTML
+		<!doctype html>
+		<html>
+		<head>
+			<meta charset="utf-8" />
+			<title>Test HTML</title>
+		</head>
+		<body>
+			<h1>This HTML is for the unit test.</h1>
+			<p>There are a few elements in this document, but no forms.</p>
+		</body>
+		</html>
+		HTML;
 
-	const ONE_FORM
-		= <<<HTML
-<!doctype html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<title>Test HTML</title>
-</head>
-<body>
-	<h1>This HTML is for the unit test.</h1>
-	<p>Hello</p>
-	
-	<form method="POST">
-		<input type="text">
-		<button type="submit"></button>
-	</form>
-</body>
-</html>
-HTML;
+	const ONE_FORM = <<<HTML
+		<!doctype html>
+		<html>
+		<head>
+			<meta charset="utf-8" />
+			<title>Test HTML</title>
+		</head>
+		<body>
+			<h1>This HTML is for the unit test.</h1>
+			<p>There is one form in this document.</p>
+			
+			<form method="post">
+				<input name="test-input" />
+				<button>Submit!</button>
+			</form>
+		</body>
+		</html>
+		HTML;
 
-	const THREE_FORMS
-		= <<<HTML
-<!doctype html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<title>Test HTML</title>
-</head>
-<body>
-	<h1>This HTML is for the unit test.</h1>
-	<p>Hello</p>
-	<form method="POST">
-		<input type="text">
-		<button type="submit"></button>
-	</form>
-	<form method="GET">
-		<input type="text" value="A text field">
-		<button type="submit"></button>
-	</form>
-	<!-- an empty form too...-->
-	<form method="POST"></form>
-</body>
-</html>
-HTML;
+	const THREE_FORMS = <<<HTML
+		<!doctype html>
+		<html>
+		<head>
+			<meta charset="utf-8" />
+			<title>Test HTML</title>
+		</head>
+		<body>
+			<h1>This HTML is for the unit test.</h1>
+			<p>There are three forms in this document.</p>
+			
+			<form method="post">
+				<input name="test-input" />
+				<button>Submit!</button>
+			</form>
+			
+			<form>
+				<input name="query" value="A text field" />
+				<button>Submit!</button>
+			</form>
+			
+			<!-- an empty form too...-->
+			<form method="post"></form>
+		</body>
+		</html>
+		HTML;
 
-	const HAS_META_ALREADY
-		= <<<HTML
-<!doctype html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<meta name="csrf-token" content="abc"/>
-	<title>Test HTML</title>
-</head>
-<body>
-	<h1>This HTML is for the unit test.</h1>
-	<p>Hello</p>
-	<!-- an empty form too...-->
-	<form method="POST">
-	</form>
-</body>
-</html>
-HTML;
+	const HAS_META_ALREADY = <<<HTML
+		<!doctype html>
+		<html>
+		<head>
+			<meta charset="utf-8" />
+			<meta name="csrf-token" content="abc" />
+			<title>Test HTML</title>
+		</head>
+		<body>
+			<h1>This HTML is for the unit test.</h1>
+			<p>This document has a form and an existing CSRF token.</p>
+			<!-- an empty form too...-->
+			<form method="post"></form>
+		</body>
+		</html>
+		HTML;
 
-	const NO_HEAD
-		= <<<HTML
-<!doctype html>
-<html>
-</html>
-HTML;
+	const NO_HEAD = <<<HTML
+		<!doctype html>
+		<html>
+		</html>
+		HTML;
 
-
-	public function testConstructFromString() {
-		$sut = new HTMLDocumentProtector(new HTMLDocument(self::NO_FORMS), new ArrayTokenStore());
-		$doc = $sut->getHTMLDocument();
-		$this->assertInstanceOf(HTMLDocument::class, $doc);
-		$this->assertEquals(
-			"Test HTML", $doc->querySelector("title")->textContent);
+	public function testConstruct_fromString():void {
+		$sut = new HTMLDocumentProtector(
+			self::NO_FORMS,
+			new ArrayTokenStore()
+		);
+		$document = $sut->getHTMLDocument();
+		self::assertInstanceOf(HTMLDocument::class, $document);
+		self::assertSame(
+			"Test HTML",
+			$document->querySelector("title")->textContent
+		);
 	}
 
-	public function testConstructFromDomDocument() {
-		$domDoc = new \Gt\Dom\HTMLDocument(self::ONE_FORM);
-		$sut = new HTMLDocumentProtector($domDoc, new ArrayTokenStore());
+	public function testConstruct_fromDomDocument():void {
+		$document = new HTMLDocument(self::ONE_FORM);
+		$sut = new HTMLDocumentProtector($document, new ArrayTokenStore());
 		$doc = $sut->getHTMLDocument();
-		$this->assertSame($domDoc, $doc);
-		$this->assertEquals(
-			"Test HTML", $doc->querySelector("title")->textContent);
+		self::assertSame($document, $doc);
+		self::assertEquals(
+			"Test HTML",
+			$doc->querySelector("title")->textContent
+		);
 	}
 
-	public function testZeroForms() {
-		$sut = new HTMLDocumentProtector(new HTMLDocument(self::NO_FORMS), new ArrayTokenStore());
+	public function testProtectAndInject_zeroForms():void {
+		$sut = new HTMLDocumentProtector(
+			new HTMLDocument(self::NO_FORMS),
+			new ArrayTokenStore()
+		);
 		$sut->protectAndInject();
 
-		$built = $sut->getHTMLDocument();
-		$domEls = $built
-			->querySelectorAll("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
+		$document = $sut->getHTMLDocument();
+		$nodeList = $document->querySelectorAll(
+			"head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']"
+		);
 
-		// check that the token has been injected into the head
-		$this->assertEquals(1, count($domEls));
-		$this->assertNotEmpty($domEls[0]->getAttribute("content"));
-		// and that a form hasn't been created or something similar
-		$this->assertNull($built->querySelector("form"));
+// check that the token has been injected into the head
+		self::assertCount(1, $nodeList);
+		self::assertNotEmpty($nodeList[0]->getAttribute("content"));
+// and that a form hasn't been created or something similar
+		self::assertNull($document->querySelector("form"));
 	}
 
-	public function testSingleForm() {
-		$sut = new HTMLDocumentProtector(new HTMLDocument(self::ONE_FORM), new ArrayTokenStore());
+	public function testProtectAndInject_singleForm():void {
+		$sut = new HTMLDocumentProtector(
+			new HTMLDocument(self::ONE_FORM),
+			new ArrayTokenStore()
+		);
 		$sut->protectAndInject();
 
-		// check that the token has been injected
-		$doc = $sut->getHTMLDocument();
-		$this->assertTrue(
-			strpos((string)$doc, HTMLDocumentProtector::TOKEN_NAME) >= 0);
-		$this->assertNotNull(
-			$doc->querySelector(
-				"input[name='" . HTMLDocumentProtector::TOKEN_NAME . "']"));
-		$this->assertNotEmpty(
-			$doc->querySelector(
-				"input[name='" . HTMLDocumentProtector::TOKEN_NAME . "']")
-				->getAttribute("value"));
-
-		// check that the meta tag has been created too
-		$metaTag = $doc->querySelector("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
-		$this->assertNotNull($metaTag);
-		$this->assertNotEmpty(
-			$metaTag->getAttribute("content"));
-	}
-
-	public function testMultipleForms() {
-		$sut = new HTMLDocumentProtector(new HTMLDocument(self::THREE_FORMS), new ArrayTokenStore());
-		$sut->protectAndInject();
-
-		// check that the token has been injected in all forms
-		$doc = $sut->getHTMLDocument();
-		$this->assertCount(
-			2,
-			$doc->querySelectorAll(
+// check that the token has been injected
+		$document = $sut->getHTMLDocument();
+		self::assertStringContainsString(HTMLDocumentProtector::TOKEN_NAME, $document);
+		self::assertNotNull($document->forms[0]->querySelector("input[name='" . HTMLDocumentProtector::TOKEN_NAME . "']"));
+		self::assertNotEmpty(
+			$document->forms[0]->querySelector(
 				"input[name='" . HTMLDocumentProtector::TOKEN_NAME . "']"
+			)->value
+		);
+
+// check that the meta tag has been created too
+		$metaTag = $document->querySelector("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
+		self::assertNotNull($metaTag);
+		self::assertNotEmpty($metaTag->getAttribute("content"));
+		self::assertEquals(
+			$metaTag->content,
+			$document->forms[0]->querySelector(
+				"input[name='" . HTMLDocumentProtector::TOKEN_NAME . "']"
+			)->value
+		);
+	}
+
+	public function testProtectAndInject_multipleForms():void {
+		$sut = new HTMLDocumentProtector(
+			new HTMLDocument(self::THREE_FORMS),
+			new ArrayTokenStore()
+		);
+		$sut->protectAndInject();
+
+// check that the token has been injected in all POST forms (not GET)
+		$document = $sut->getHTMLDocument();
+		self::assertCount(
+			2,
+			$document->querySelectorAll(
+				"form input[name='" . HTMLDocumentProtector::TOKEN_NAME . "']"
 			)
 		);
-		$this->assertCount(
+		self::assertCount(
 			1,
-			$doc->querySelectorAll(
+			$document->querySelectorAll(
 				"head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']")
 		);
 	}
 
-	public function testSingleCodeSharedAcrossForms() {
-		$sut = new HTMLDocumentProtector(new HTMLDocument(self::THREE_FORMS), new ArrayTokenStore());
-		$sut->protectAndInject(HTMLDocumentProtector::ONE_TOKEN_PER_PAGE);
+	public function testProtectAndInject_singleCodeSharedAcrossForms():void {
+		$sut = new HTMLDocumentProtector(
+			new HTMLDocument(self::THREE_FORMS),
+			new ArrayTokenStore()
+		);
+		$sut->protectAndInject();
 
-		$doc = $sut->getHTMLDocument();
+		$document = $sut->getHTMLDocument();
 		$token = null;
-		foreach($doc->querySelectorAll(
-			"input[name='" . HTMLDocumentProtector::TOKEN_NAME . "']") as $input) {
+		foreach($document->querySelectorAll("form input[name='" . HTMLDocumentProtector::TOKEN_NAME . "']") as $input) {
 			if($token === null) {
-				$token = $input->getAttribute("value");
+				$token = $input->value;
 			}
 			else {
-				$this->assertEquals($token, $input->getAttribute("value"));
-				$metaTag = $doc->querySelector("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
-				$this->assertNotNull($metaTag);
-				$this->assertEquals($token, $metaTag->getAttribute("content"));
+				self::assertEquals($token, $input->value);
 			}
 		}
+
+		$metaTag = $document->querySelector("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
+		self::assertEquals($token, $metaTag->content);
 	}
 
-	public function testUniqueCodePerForm() {
-		$sut = new HTMLDocumentProtector(new HTMLDocument(self::THREE_FORMS), new ArrayTokenStore());
+	public function testProtectAndInject_uniqueCodePerForm():void {
+		$sut = new HTMLDocumentProtector(
+			new HTMLDocument(self::THREE_FORMS),
+			new ArrayTokenStore()
+		);
 		$sut->protectAndInject(HTMLDocumentProtector::ONE_TOKEN_PER_FORM);
 
-		$doc = $sut->getHTMLDocument();
-		$metaTag = $doc->querySelector("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
-		$this->assertNotNull($metaTag);
-		$prevToken = $metaTag->getAttribute("content");
-		$newToken = null;
-		foreach($doc->querySelectorAll(
-			"input[name='" . HTMLDocumentProtector::TOKEN_NAME . "']") as $input) {
-			$newToken = $token = $input->getAttribute("value");
-			$this->assertNotEquals($newToken, $prevToken);
+		$document = $sut->getHTMLDocument();
+		$metaTag = $document->querySelector("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
+		self::assertNotNull($metaTag);
+		$prevToken = $metaTag->content;
+
+		foreach($document->querySelectorAll(
+			"form input[name='" . HTMLDocumentProtector::TOKEN_NAME . "']") as $input) {
+			$newToken = $input->value;
+			self::assertNotEquals($newToken, $prevToken);
 			$prevToken = $newToken;
 		}
 	}
 
-	public function testMetaTagNoHead() {
-		$sut = new HTMLDocumentProtector(new HTMLDocument(self::NO_HEAD), new ArrayTokenStore());
-		$sut->protectAndInject(HTMLDocumentProtector::ONE_TOKEN_PER_PAGE);
-
-		$doc = $sut->getHTMLDocument();
-		$metaTag = $doc->querySelector("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
-		$this->assertNotNull($metaTag);
-		$this->assertNotEmpty($metaTag->getAttribute("content"));
-	}
-
-	public function testMetaTagAlreadyExists() {
-		$sut = new HTMLDocumentProtector(new HTMLDocument(self::HAS_META_ALREADY), new ArrayTokenStore());
-		$sut->protectAndInject(HTMLDocumentProtector::ONE_TOKEN_PER_PAGE);
-
-		$doc = $sut->getHTMLDocument();
-		$metaTag = $doc->querySelector("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
-		$this->assertNotNull($metaTag);
-		$this->assertNotEmpty($metaTag->getAttribute("content"));
-		// make sure it's been updated (i.e. doesn't still have the value from the original html)
-		$this->assertNotEquals("abc", $metaTag->getAttribute("content"));
-	}
-
-	public function testDifferentTokenName() {
-		$sut = new HTMLDocumentProtector(new HTMLDocument(self::HAS_META_ALREADY), new ArrayTokenStore());
-		$tokenName = $sut::TOKEN_NAME;
+	public function testProtectAndInject_metaTagNoHead():void {
+		$sut = new HTMLDocumentProtector(
+			new HTMLDocument(self::NO_HEAD),
+			new ArrayTokenStore()
+		);
 		$sut->protectAndInject();
 
-		// check that the token has been injected in all forms
-		$doc = $sut->getHTMLDocument();
-		$this->assertEquals(
-			1, $doc->querySelectorAll(
-			"input[name='$tokenName']")->length);
-		$this->assertEquals(
-			1, $doc->querySelectorAll(
-			"head meta[name='$tokenName']")->length);
+		$document = $sut->getHTMLDocument();
+		$metaTag = $document->querySelector("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
+		self::assertNotNull($metaTag);
+		self::assertNotEmpty($metaTag->content);
+	}
 
-		// and make sure the pre-existing meta tag hasn't been squashed
-		$this->assertEquals(
-			1, $doc->querySelectorAll(
-			"head meta[name='csrf-token']")->length);
+	public function testProtectAndInject_metaTagAlreadyExists():void {
+		$document = new HTMLDocument(self::HAS_META_ALREADY);
+		$metaTag = $document->querySelector("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
+		$originalValue = $metaTag->content;
+		$sut = new HTMLDocumentProtector($document, new ArrayTokenStore());
+		$sut->protectAndInject();
+
+		$metaTag = $document->querySelector("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
+		self::assertNotNull($metaTag);
+		self::assertNotEmpty($metaTag->getAttribute("content"));
+// make sure it's been updated (i.e. doesn't still have the value from the original html)
+		self::assertNotEquals($originalValue, $metaTag->content);
+	}
+
+	public function testProtectAndInject_differentTokenName() {
+		$sut = new HTMLDocumentProtector(new HTMLDocument(self::HAS_META_ALREADY), new ArrayTokenStore());
+		$tokenName = HTMLDocumentProtector::TOKEN_NAME;
+		$sut->protectAndInject();
+
+// check that the token has been injected in all forms
+		$document = $sut->getHTMLDocument();
+		self::assertCount(
+			1,
+			$document->querySelectorAll("form input[name='$tokenName']")
+		);
+		self::assertCount(
+			1,
+			$document->querySelectorAll("head meta[name='$tokenName']")
+		);
+
+// and make sure the pre-existing meta tag hasn't been squashed
+		self::assertCount(
+			1,
+			$document->querySelectorAll("head meta[name='csrf-token']")
+		);
 	}
 }

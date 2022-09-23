@@ -1,6 +1,7 @@
 <?php
 namespace Gt\Csrf\Test;
 
+use Exception;
 use Gt\Csrf\ArrayTokenStore;
 use Gt\Csrf\Exception\CsrfException;
 use Gt\Csrf\Exception\CsrfTokenInvalidException;
@@ -11,26 +12,27 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 
 class TokenStoreTest extends TestCase {
-	const ONE_FORM
-		= <<<HTML
-<!doctype html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<title>Test HTML</title>
-</head>
-<body>
-	<h1>This HTML is for the unit test.</h1>
-	<p>Hello</p>
-    <form method="POST">
-        <input type="text">
-        <button type="submit"></button>
-    </form>
-</body>
-HTML;
+	const ONE_FORM = <<<HTML
+		<!doctype html>
+		<html>
+		<head>
+			<meta charset="utf-8" />
+			<title>Test HTML</title>
+		</head>
+		<body>
+			<h1>This HTML is for the unit test.</h1>
+			<p>Hello, CSRF!</p>
+			
+			<form method="post">
+				<input required />
+				<button>Submit me</button>
+			</form>
+		</body>
+		</html>
+		HTML;
 
-	// no post request received
-	public function testNoPOST() {
+	/** no post request received */
+	public function testProcessAndVerify_noPost():void {
 		$exception = null;
 
 		try {
@@ -42,8 +44,8 @@ HTML;
 		self::assertNull($exception);
 	}
 
-	// POST request received but without a token
-	public function testNoToken() {
+	/** POST request received but without a token */
+	public function testProcessAndVerify_noToken():void {
 		$post = [];
 		$post["doink"] = "binky";
 		$sut = new ArrayTokenStore();
@@ -51,8 +53,8 @@ HTML;
 		$sut->processAndVerify($post);
 	}
 
-	// POST request received with token but invalid
-	public function testInvalidToken() {
+	/** POST request received with token but invalid */
+	public function testProcessAndVerify_invalidToken():void {
 		$post = [];
 		$post["doink"] = "binky";
 		$post[HTMLDocumentProtector::TOKEN_NAME] = "12321";
@@ -61,8 +63,8 @@ HTML;
 		$sut->processAndVerify($post);
 	}
 
-	// POST request received with token but invalid
-	public function testSpentToken() {
+	/** POST request received with token but invalid */
+	public function testProcessAndVerify_spentToken():void {
 		$tokenStore = new ArrayTokenStore();
 		$token = $tokenStore->generateNewToken();
 		$tokenStore->saveToken($token);
@@ -70,22 +72,22 @@ HTML;
 
 		$post = [];
 		$post["doink"] = "binky";
-		// add the token as if it were from a previous page
+// add the token as if it were from a previous page
 		$post[HTMLDocumentProtector::TOKEN_NAME] = $token;
 
 		$this->expectException(CSRFTokenSpentException::class);
 		$tokenStore->processAndVerify($post);
 	}
 
-	// POST request received with token and valid
-	public function testValidToken() {
+	/** POST request received with token and valid */
+	public function testProcessAndVerify_validToken():void {
 		$tokenStore = new ArrayTokenStore();
 		$token = $tokenStore->generateNewToken();
 		$tokenStore->saveToken($token);
 
 		$post = [];
 		$post["doink"] = "binky";
-		// add the token as if it were from a previous page
+// add the token as if it were from a previous page
 		$post[HTMLDocumentProtector::TOKEN_NAME] = $token;
 
 		$exception = null;
@@ -98,7 +100,11 @@ HTML;
 		self::assertNull($exception);
 	}
 
-	public function testValidTokenObj() {
+	/**
+	 * php.gt/webengine provides user input as a custom object
+	 * with an asArray function.
+	 */
+	public function testProcessAndVerify_validTokenObj():void {
 		$tokenStore = new ArrayTokenStore();
 		$token = $tokenStore->generateNewToken();
 		$tokenStore->saveToken($token);
@@ -110,7 +116,7 @@ HTML;
 		];
 
 		$mockBuilder = self::getMockBuilder(StdClass::class);
-		$mockBuilder->setMethods(["asArray"]);
+		$mockBuilder->addMethods(["asArray"]);
 		$post = $mockBuilder->getMock();
 		$post->method("asArray")
 			->willReturn($arrayData);
@@ -125,29 +131,29 @@ HTML;
 		self::assertNull($exception);
 	}
 
-	// check that repeated calls to the token generator result in unique tokens
-	public function testCodesAreUnique() {
+	/** check that repeated calls to the token generator result in unique tokens */
+	public function testGenerateNewToken_codesAreUnique():void {
 		$sut = new ArrayTokenStore();
 		$previousTokens = [];
 
 		$iterations = 5;
 		for($i = 0; $i < $iterations; $i++) {
 			$token = $sut->generateNewToken();
-			$this->assertArrayNotHasKey($token, $previousTokens);
+			self::assertArrayNotHasKey($token, $previousTokens);
 			$previousTokens[$token] = null;
 		}
 
-		$this->assertEquals($iterations, count($previousTokens));
+		self::assertCount($iterations, $previousTokens);
 	}
 
-	public function testTokenLengthChange() {
+	public function testSaveToken_tokenLengthChange():void {
 		$sut = new ArrayTokenStore();
 		$sut->setTokenLength(6);
 
 		$token = $sut->generateNewToken();
-		$this->assertEquals(6, strlen($token));
+		self::assertEquals(6, strlen($token));
 
-		// now make sure the shorter token is successfully stored
+// now make sure the shorter token is successfully stored
 		$sut->saveToken($token);
 
 		$exception = null;
@@ -155,7 +161,7 @@ HTML;
 		try {
 			$sut->verifyToken($token);
 		}
-		catch(\Exception $exception) {}
+		catch(Exception $exception) {}
 
 		self::assertNull($exception);
 	}
