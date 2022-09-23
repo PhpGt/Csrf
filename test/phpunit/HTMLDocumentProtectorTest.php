@@ -253,6 +253,19 @@ class HTMLDocumentProtectorTest extends TestCase {
 		self::assertNotEquals($originalValue, $metaTag->content);
 	}
 
+	public function testProtect_metaTagMultipleForms():void {
+		$document = new HTMLDocument(self::THREE_FORMS);
+		$sut = new HTMLDocumentProtector($document, new ArrayTokenStore());
+		$sut->protect(HTMLDocumentProtector::ONE_TOKEN_PER_FORM);
+
+		$nodeList = $document->querySelectorAll("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
+// There should still only be 1 meta tag...
+		self::assertCount(1, $nodeList);
+// ... but the tag's content should have two values (one per POST form).
+		$tokenArray = explode(",", $nodeList[0]->content);
+		self::assertCount(2, $tokenArray);
+	}
+
 	public function testProtect_differentTokenName() {
 		$sut = new HTMLDocumentProtector(new HTMLDocument(self::HAS_META_ALREADY), new ArrayTokenStore());
 		$tokenName = HTMLDocumentProtector::TOKEN_NAME;

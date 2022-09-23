@@ -52,15 +52,22 @@ class HTMLDocumentProtector {
 		string $tokenSharing = self::ONE_TOKEN_PER_PAGE
 	):string {
 		$forms = $this->document->forms;
+		$tokenArray = [];
+
+		$token = null;
 
 		if($forms->length > 0) {
-			$token = $this->tokenStore->generateNewToken();
-			$this->tokenStore->saveToken($token);
-
 			foreach($forms as $form) {
 				$formMethod = $form->getAttribute("method");
 				if(strtolower($formMethod) !== "post") {
 					continue;
+				}
+
+				if($tokenSharing === self::ONE_TOKEN_PER_FORM
+				|| is_null($token)) {
+					$token = $this->tokenStore->generateNewToken();
+					$this->tokenStore->saveToken($token);
+					array_push($tokenArray, $token);
 				}
 
 				$csrfElement = $this->document->createElement(
@@ -82,16 +89,13 @@ class HTMLDocumentProtector {
 					$csrfElement,
 					$form->firstChild
 				);
-
-				if($tokenSharing === self::ONE_TOKEN_PER_FORM) {
-					$token = $this->tokenStore->generateNewToken();
-					$this->tokenStore->saveToken($token);
-				}
 			}
 		}
-		else {
+
+		if(is_null($token)) {
 			$token = $this->tokenStore->generateNewToken();
 			$this->tokenStore->saveToken($token);
+			array_push($tokenArray, $token);
 		}
 
 		$meta = $this->document->querySelector(
@@ -123,8 +127,7 @@ class HTMLDocumentProtector {
 			$head->appendChild($meta);
 		}
 
-		$meta->setAttribute("content", $token);
-
+		$meta->setAttribute("content", implode(",", $tokenArray));
 		return $token;
 	}
 
