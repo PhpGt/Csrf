@@ -62,7 +62,7 @@ abstract class TokenStore {
 	 * $_POST but it has already been consumed by a previous request.
 	 * @see TokenStore::verifyToken().
 	 */
-	public function processAndVerify(array|object $postData):void {
+	public function verify(array|object $postData):void {
 // Expect the token to be present on ALL post requests.
 		if(!is_array($postData)
 		&& is_callable([$postData, "asArray"])) {

@@ -31,38 +31,36 @@ The CSRF library does two things:
 
 Each is just a single method call, but you need to set up first.
 
-### Step 1: Set Up
+### Step 1: Set up
 
-Start by creating the TokenStore. There is currently a single implementation — the `ArrayTokenStore`.  Because the `ArrayTokenStore` is not persistent, you need to save it between page requests so that tokens generated for one page request can be checked on another. The easiest way to save it is to put it on the `Session`:
+Start by creating the TokenStore. There are currently two implementations — the `ArrayTokenStore` and `SessionTokenStore`.  The `ArrayTokenStore` is the most basic and does not persist in any way, but can be extended into custom integrations. The `SessionTokenStore` is an inbuilt implementation that persists tokens between requests, so that tokens generated for one page request can be checked on another. The easiest way to add CSRF protection is to use the Session:
 
 ```php
-use Gt\Csrf\ArrayTokenStore;
+use Gt\Csrf\SessionTokenStore;
 
-// check to see if there's already a token store for this session, and
-// create one if not
-if(!$session->contains("gt.csrf")) {
-	$session->set("gt.csrf", new ArrayTokenStore());
-}
-
-$tokenStore = $session->get("gt.csrf");
+// $session is an object-oriented representation of $_SESSION
+// that implements the Gt\Session\SessionContainer Interface.
+$tokenStore = new SessionTokenStore($session);
 ```
 
 ### Step 2: Verify
 
-Before running any other code (especially things that could affect data), you should check to make sure that there's a valid CSRF token in place if it's needed. That step is also very straightforward:
+Before running any other code (especially things that could affect data), you should check to make sure that there's a valid CSRF token in place if it's needed:
 
 ```php
 use Gt\Csrf\Exception\CSRFException;
 
-try {
-	$tokenStore->processAndVerify();
-}
-catch(CSRFException $e) {
+if(this_is_a_post_request()) {
+	try {
+		$tokenStore->verify();
+	}
+	catch(CSRFException $e) {
 // Stop processing this request and get out of there!
+	}
 }
 ```
 
-If the request contains a POST and there is no valid CSRF token, a `CSRFException` will be thrown — so you should plan to catch it.  Remember, if that happens, the request was fraudulent so you shouldn't process it!
+If the request contains a POST and there is no valid CSRF token, a `CSRFException` will be thrown — so you should plan to catch it.  Remember, if that happens, the request was fraudulent, so you shouldn't process it!
 
 ### Step 3: Inject for Next Time
 
@@ -76,28 +74,29 @@ use Gt\Csrf\HTMLDocumentProtector;
 $html = "<html>...</html>";
 
 // Now do the processing.
-$page = new HTMLDocumentProtector($html, $tokenStore);
-$page->protectAndInject();
+$protector = new HTMLDocumentProtector($html, $tokenStore);
+$protector->protect();
 
-// You can get it back out however you wish.
-echo $page->getHTMLDocument()->saveHTML();
+// Output the HTML of the document - you will see the new fields have
+// been automatically injected.
+echo $protector->getHTMLDocument();
 ```
 
-Using Tokens of a Different Length
+Using tokens of a fifferent length
 ----------------------------------
 
 By default, 32 character tokens are generated. They use characters from the set [a-zA-Z0-9], meaning a 64-bit token which would take a brute-force attacker making 100,000 requests per second around 2.93 million years to guess. If this seems either excessive or inadequate you can change the token length using `TokenStore::setTokenLength()`.
 
-Special Note About AJAX Clients
--------------------------------
+Special note about client-side requests
+---------------------------------------
 
-Note that if there are several forms on your page, a unique token will be generated and injected into each form. When a form is submitted using AJAX, the response will contain a new token that must be refreshed in the page ready for the next submission.
+Note that if there are several forms on your page, a unique token will be generated and injected into each form. When a form is submitted using a client-side request (XMLHTTPRequest or Fetch, a.k.a. AJAX), the response will contain a new token that must be refreshed in the page ready for the next submission.
 
 If you would prefer to have one token per page, shared across all forms, this can be configured by passing in the TOKEN_PER_PAGE parameter to the projectAndInject method: `$page->protectAndInject(HTMLDocumentProtector::TOKEN_PER_PAGE);`.
 
-Storing one token per page will reduce the amount of server resources required, but concurrent AJAX requests will fail which is why one token per form is the default.
+Storing one token per page will reduce the amount of server resources required, but concurrent client-side requests will fail, which is why one token per form is the default.
 
-Alternatives to Storing Tokens on the Session
+Alternatives to storing tokens on the session
 ---------------------------------------------
 
-The package includes an `ArrayTokenStore`, which can be stored on the session. You can implement alternative token stores such as a RDBMS or Mongo by subclassing `TokenStore` and implementing the abstract methods.
+The package includes an `ArrayTokenStore`, which can be stored on the session. You can implement alternative token stores such as a RDBMS or NoSQL by subclassing `TokenStore` and implementing the abstract methods.
