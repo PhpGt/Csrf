@@ -8,7 +8,7 @@ use Gt\Csrf\Exception\CsrfTokenSpentException;
 use PHPUnit\Framework\TestCase;
 
 class ArrayTokenStoreTest extends TestCase {
-	public function testATokenExists() {
+	public function testGenerateNewToken_saveToken_aTokenExists():void {
 		$sut = new ArrayTokenStore();
 		// generate a token
 		$token = $sut->generateNewToken();
@@ -24,70 +24,61 @@ class ArrayTokenStoreTest extends TestCase {
 		self::assertNull($exception);
 	}
 
-	// token doesn't exist
-	public function testATokenDoesntExist() {
+	public function testVerifyToken_aTokenDoesntExist():void {
 		$sut = new ArrayTokenStore();
-
 		// see if a non-existent token passes
 		$this->expectException(CSRFTokenInvalidException::class);
 		$sut->verifyToken("mickey mouse");
 	}
 
-	// token exists and has been consumed
-	public function testConsumeAToken() {
+	public function test_consumeToken():void {
 		$sut = new ArrayTokenStore();
 
-		// generate a token
 		$token = $sut->generateNewToken();
 		$sut->saveToken($token);
 
-		// now consume it
 		$sut->consumeToken($token);
 
-		// and make sure it no longer passes verification
+// make sure the consumed token no longer passes verification
 		$this->expectException(CSRFTokenSpentException::class);
 		$sut->verifyToken($token);
 	}
 
-	// ensure the limit to the number of tokens works
-	public function testTokenLimit() {
+	public function testVerifyToken_tokenLimit():void {
 		$sut = new ArrayTokenStore();
 		$firstToken = $sut->generateNewToken();
 		$sut->saveToken($firstToken);
 
-		$tokens = 1;
 		$lastToken = null;
-		while($tokens++ <= $sut->getMaxTokens()) {
+		for($tokenCount = 0; $tokenCount < $sut->getMaxTokens(); $tokenCount++) {
 			$lastToken = $sut->generateNewToken();
 			$sut->saveToken($lastToken);
 		}
 
 		$sut->verifyToken($lastToken);
-		// now we've hit the max, the original token should no longer be valid
+// now we've hit the max, the original token should no longer be valid
 		$this->expectException(CSRFTokenInvalidException::class);
 		$sut->verifyToken($firstToken);
 	}
 
-	public function testChangeTokenLimit() {
+	public function testConstructor_changeTokenLimit():void {
 		$tokenLimit = 5;
 		$sut = new ArrayTokenStore($tokenLimit);
 
-		// check that the new limit has stuck
-		$this->assertEquals($tokenLimit, $sut->getMaxTokens());
-
+// check that the new limit has stuck
+		self::assertEquals($tokenLimit, $sut->getMaxTokens());
 
 		$firstToken = $sut->generateNewToken();
 		$sut->saveToken($firstToken);
 
-		$tokens = 1;
 		$lastToken = null;
-		while($tokens++ <= $tokenLimit) {
+		for($tokenCount = 0; $tokenCount < $tokenLimit; $tokenCount++) {
 			$lastToken = $sut->generateNewToken();
 			$sut->saveToken($lastToken);
 		}
 
 		$sut->verifyToken($lastToken);
-		// now we've hit the max, the original token should no longer be valid
+// now we've hit the max, the original token should no longer be valid
 		$this->expectException(CSRFTokenInvalidException::class);
 		$sut->verifyToken($firstToken);
 	}

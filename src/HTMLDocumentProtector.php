@@ -20,9 +20,12 @@ class HTMLDocumentProtector {
 	private TokenStore $tokenStore;
 
 	public function __construct(
-		HTMLDocument $document,
+		string|HTMLDocument $document,
 		TokenStore $tokenStore
 	) {
+		if(is_string($document)) {
+			$document = new HTMLDocument($document);
+		}
 		$this->document = $document;
 		$this->tokenStore = $tokenStore;
 	}
