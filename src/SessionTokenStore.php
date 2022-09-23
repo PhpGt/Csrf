@@ -3,16 +3,15 @@ namespace Gt\Csrf;
 
 use Gt\Csrf\Exception\CsrfTokenInvalidException;
 use Gt\Csrf\Exception\CsrfTokenSpentException;
-use Gt\Session\SessionStore;
+use Gt\Session\SessionContainer;
 
 class SessionTokenStore extends TokenStore {
 	const SESSION_KEY = "tokenList";
 
-	/** @var SessionStore */
-	protected $session;
+	protected SessionContainer $session;
 
 	public function __construct(
-		SessionStore $session,
+		SessionContainer $session,
 		int $maxTokens = null
 	) {
 		$this->session = $session;

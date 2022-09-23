@@ -32,12 +32,12 @@ class TokenStoreTest extends TestCase {
 		HTML;
 
 	/** no post request received */
-	public function testProcessAndVerify_noPost():void {
+	public function testVerify_noPost():void {
 		$exception = null;
 
 		try {
 			$sut = new ArrayTokenStore();
-			$sut->processAndVerify([]);
+			$sut->verify([]);
 		}
 		catch(CsrfException $exception) {}
 
@@ -45,26 +45,26 @@ class TokenStoreTest extends TestCase {
 	}
 
 	/** POST request received but without a token */
-	public function testProcessAndVerify_noToken():void {
+	public function testVerify_noToken():void {
 		$post = [];
 		$post["doink"] = "binky";
 		$sut = new ArrayTokenStore();
 		$this->expectException(CSRFTokenMissingException::class);
-		$sut->processAndVerify($post);
+		$sut->verify($post);
 	}
 
 	/** POST request received with token but invalid */
-	public function testProcessAndVerify_invalidToken():void {
+	public function testVerify_invalidToken():void {
 		$post = [];
 		$post["doink"] = "binky";
 		$post[HTMLDocumentProtector::TOKEN_NAME] = "12321";
 		$sut = new ArrayTokenStore();
 		$this->expectException(CSRFTokenInvalidException::class);
-		$sut->processAndVerify($post);
+		$sut->verify($post);
 	}
 
 	/** POST request received with token but invalid */
-	public function testProcessAndVerify_spentToken():void {
+	public function testVerify_spentToken():void {
 		$tokenStore = new ArrayTokenStore();
 		$token = $tokenStore->generateNewToken();
 		$tokenStore->saveToken($token);
@@ -76,11 +76,11 @@ class TokenStoreTest extends TestCase {
 		$post[HTMLDocumentProtector::TOKEN_NAME] = $token;
 
 		$this->expectException(CSRFTokenSpentException::class);
-		$tokenStore->processAndVerify($post);
+		$tokenStore->verify($post);
 	}
 
 	/** POST request received with token and valid */
-	public function testProcessAndVerify_validToken():void {
+	public function testVerify_validToken():void {
 		$tokenStore = new ArrayTokenStore();
 		$token = $tokenStore->generateNewToken();
 		$tokenStore->saveToken($token);
@@ -93,7 +93,7 @@ class TokenStoreTest extends TestCase {
 		$exception = null;
 
 		try {
-			$tokenStore->processAndVerify($post);
+			$tokenStore->verify($post);
 		}
 		catch(CsrfException $exception) {}
 
@@ -104,7 +104,7 @@ class TokenStoreTest extends TestCase {
 	 * php.gt/webengine provides user input as a custom object
 	 * with an asArray function.
 	 */
-	public function testProcessAndVerify_validTokenObj():void {
+	public function testVerify_validTokenObj():void {
 		$tokenStore = new ArrayTokenStore();
 		$token = $tokenStore->generateNewToken();
 		$tokenStore->saveToken($token);
@@ -124,7 +124,7 @@ class TokenStoreTest extends TestCase {
 		$exception = null;
 
 		try {
-			$tokenStore->processAndVerify($post);
+			$tokenStore->verify($post);
 		}
 		catch(CsrfException $exception) {}
 

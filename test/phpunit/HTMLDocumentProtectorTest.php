@@ -114,12 +114,12 @@ class HTMLDocumentProtectorTest extends TestCase {
 		);
 	}
 
-	public function testProtectAndInject_zeroForms():void {
+	public function testProtect_zeroForms():void {
 		$sut = new HTMLDocumentProtector(
 			new HTMLDocument(self::NO_FORMS),
 			new ArrayTokenStore()
 		);
-		$sut->protectAndInject();
+		$sut->protect();
 
 		$document = $sut->getHTMLDocument();
 		$nodeList = $document->querySelectorAll(
@@ -133,12 +133,12 @@ class HTMLDocumentProtectorTest extends TestCase {
 		self::assertNull($document->querySelector("form"));
 	}
 
-	public function testProtectAndInject_singleForm():void {
+	public function testProtect_singleForm():void {
 		$sut = new HTMLDocumentProtector(
 			new HTMLDocument(self::ONE_FORM),
 			new ArrayTokenStore()
 		);
-		$sut->protectAndInject();
+		$sut->protect();
 
 // check that the token has been injected
 		$document = $sut->getHTMLDocument();
@@ -162,12 +162,12 @@ class HTMLDocumentProtectorTest extends TestCase {
 		);
 	}
 
-	public function testProtectAndInject_multipleForms():void {
+	public function testProtect_multipleForms():void {
 		$sut = new HTMLDocumentProtector(
 			new HTMLDocument(self::THREE_FORMS),
 			new ArrayTokenStore()
 		);
-		$sut->protectAndInject();
+		$sut->protect();
 
 // check that the token has been injected in all POST forms (not GET)
 		$document = $sut->getHTMLDocument();
@@ -184,12 +184,12 @@ class HTMLDocumentProtectorTest extends TestCase {
 		);
 	}
 
-	public function testProtectAndInject_singleCodeSharedAcrossForms():void {
+	public function testProtect_singleCodeSharedAcrossForms():void {
 		$sut = new HTMLDocumentProtector(
 			new HTMLDocument(self::THREE_FORMS),
 			new ArrayTokenStore()
 		);
-		$sut->protectAndInject();
+		$sut->protect();
 
 		$document = $sut->getHTMLDocument();
 		$token = null;
@@ -206,12 +206,12 @@ class HTMLDocumentProtectorTest extends TestCase {
 		self::assertEquals($token, $metaTag->content);
 	}
 
-	public function testProtectAndInject_uniqueCodePerForm():void {
+	public function testProtect_uniqueCodePerForm():void {
 		$sut = new HTMLDocumentProtector(
 			new HTMLDocument(self::THREE_FORMS),
 			new ArrayTokenStore()
 		);
-		$sut->protectAndInject(HTMLDocumentProtector::ONE_TOKEN_PER_FORM);
+		$sut->protect(HTMLDocumentProtector::ONE_TOKEN_PER_FORM);
 
 		$document = $sut->getHTMLDocument();
 		$metaTag = $document->querySelector("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
@@ -226,12 +226,12 @@ class HTMLDocumentProtectorTest extends TestCase {
 		}
 	}
 
-	public function testProtectAndInject_metaTagNoHead():void {
+	public function testProtect_metaTagNoHead():void {
 		$sut = new HTMLDocumentProtector(
 			new HTMLDocument(self::NO_HEAD),
 			new ArrayTokenStore()
 		);
-		$sut->protectAndInject();
+		$sut->protect();
 
 		$document = $sut->getHTMLDocument();
 		$metaTag = $document->querySelector("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
@@ -239,12 +239,12 @@ class HTMLDocumentProtectorTest extends TestCase {
 		self::assertNotEmpty($metaTag->content);
 	}
 
-	public function testProtectAndInject_metaTagAlreadyExists():void {
+	public function testProtect_metaTagAlreadyExists():void {
 		$document = new HTMLDocument(self::HAS_META_ALREADY);
 		$metaTag = $document->querySelector("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
 		$originalValue = $metaTag->content;
 		$sut = new HTMLDocumentProtector($document, new ArrayTokenStore());
-		$sut->protectAndInject();
+		$sut->protect();
 
 		$metaTag = $document->querySelector("head meta[name='" . HTMLDocumentProtector::TOKEN_NAME . "']");
 		self::assertNotNull($metaTag);
@@ -253,10 +253,10 @@ class HTMLDocumentProtectorTest extends TestCase {
 		self::assertNotEquals($originalValue, $metaTag->content);
 	}
 
-	public function testProtectAndInject_differentTokenName() {
+	public function testProtect_differentTokenName() {
 		$sut = new HTMLDocumentProtector(new HTMLDocument(self::HAS_META_ALREADY), new ArrayTokenStore());
 		$tokenName = HTMLDocumentProtector::TOKEN_NAME;
-		$sut->protectAndInject();
+		$sut->protect();
 
 // check that the token has been injected in all forms
 		$document = $sut->getHTMLDocument();

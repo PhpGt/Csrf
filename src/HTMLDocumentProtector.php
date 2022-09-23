@@ -48,7 +48,7 @@ class HTMLDocumentProtector {
 	 * generating unique tokens. In most cases this default is suitable - wherever the normal
 	 * model of returning a new page in response to a form submit is used.
 	 */
-	public function protectAndInject(
+	public function protect(
 		string $tokenSharing = self::ONE_TOKEN_PER_PAGE
 	):string {
 		$forms = $this->document->forms;
