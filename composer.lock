@@ -62,7 +62,7 @@
         },
         {
             "name": "phpgt/dom",
-            "version": "v4.1.0",
+            "version": "v4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PhpGt/Dom.git",
@@ -148,7 +148,7 @@
             "description": "The modern DOM API for PHP projects.",
             "support": {
                 "issues": "https://github.com/PhpGt/Dom/issues",
-                "source": "https://github.com/PhpGt/Dom/tree/v4.1.0"
+                "source": "https://github.com/PhpGt/Dom/tree/v4.1.1"
             },
             "funding": [
                 {
