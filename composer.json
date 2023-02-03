@@ -11,7 +11,7 @@
 	},
 	"require-dev": {
 		"phpstan/phpstan": "^v1.8",
-		"phpunit/phpunit": "^v9.5"
+		"phpunit/phpunit": "^v9.5 || ^10.0"
 	},
 
 	"autoload": {
